@@ -1,0 +1,69 @@
+{
+  "@context" : {
+    "dc" : "http://purl.org/dc/terms/",
+    "foaf" : "http://xmlns.com/foaf/0.1/",
+    "prov" : "http://www.w3.org/ns/prov#",
+    "rdf" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "skos" : "http://www.w3.org/2004/02/skos/core#",
+    "xsd" : "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@graph" : [
+    {
+  		"@id" : "https://data.vlaanderen.be/doc/adres/3764491",
+  		"@type" : "https://data.vlaanderen.be/ns/adres#Adres",
+  		"dc:issued" : {
+    		"@type" : "xsd:dateTime",
+    		"@value" : "2019-10-01T08:26:41Z"
+  		},
+  		"foaf:primaryTopic" : "https://data.vlaanderen.be/id/adres/3764491",
+  		"http://mu.semte.ch/vocabularies/core/uuid" : "adres-3764491",
+  		"prov:wasAttributedTo" : "https://data.vlaanderen.be/id/gemeente/31040",
+  		"https://data.vlaanderen.be/ns/adres#Adres.status" : {
+    		"@type" : "skos:Concept",
+    		"@value" : "https://data.vlaanderen.be/id/concept/adresstatus/inGebruik"
+  		},
+  		"https://data.vlaanderen.be/ns/adres#heeftGemeentenaam" : {
+    		"@type" : "https://data.vlaanderen.be/ns/adres#Gemeentenaam",
+    		"@value" : "https://data.vlaanderen.be/id/gemeentenaam/31040"
+  		},
+  		"https://data.vlaanderen.be/ns/adres#heeftPostinfo" : {
+    		"@type" : "https://data.vlaanderen.be/ns/adres#Postinfo",
+    		"@value" : "https://data.vlaanderen.be/id/postinfo/8210"
+  		},
+  		"https://data.vlaanderen.be/ns/adres#heeftStraatnaam" : {
+    		"@type" : "https://data.vlaanderen.be/ns/adres#Straatnaam",
+    		"@value" : "https://data.vlaanderen.be/id/straatnaam/47657"
+  		},
+  		"https://data.vlaanderen.be/ns/adres#huisnummer" : {
+    		"@type" : "xsd:string",
+    		"@value" : "112A"
+  		},
+  		"https://data.vlaanderen.be/ns/adres#officieelToegekend" : {
+    		"@type" : "xsd:boolean",
+    		"@value" : "true"
+  		},
+  		"https://data.vlaanderen.be/ns/adres#positie" : {
+    		"@type" : "http://www.opengis.net/ont/sf#Point",
+    		"http://mu.semte.ch/vocabularies/core/uuid" : "adres-3764491-positie",
+    		"http://www.opengis.net/ont/geosparql#asWKT" : {
+      			"@type" : "http://www.openlinksw.com/schemas/virtrdf#Geometry",
+      			"@value" : "POINT(3.1572242972525 51.132021325094)"
+    		}
+  		},
+  		"https://www.w3.org/ns/adms#identifier" : {
+    		"http://mu.semte.ch/vocabularies/core/uuid" : "adres-3764491-identificator",
+    		"https://data.vlaanderen.be/ns/generiek#gestructureerdedentificator" : {
+      			"http://mu.semte.ch/vocabularies/core/uuid" : "adres-3764491-identificator-lokaal",
+      			"https://data.vlaanderen.be/ns/generiek#lokaleIdentificator" : "3764491",
+      			"https://data.vlaanderen.be/ns/generiek#naamruimte" : "https://data.vlaanderen.be/id/adres",
+      			"https://data.vlaanderen.be/ns/generiek#versieIdentificator" : "6"
+    		}
+  		}
+  	},
+    {
+        "@id" : "https://data.vlaanderen.be/id/concept/adresstatus/inGebruik",
+        "skos:prefLabel" : "in gebruik"
+    }
+  ]
+
+}
