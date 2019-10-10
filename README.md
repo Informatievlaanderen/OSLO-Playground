@@ -14,10 +14,29 @@ Ontwikkelaars hebben 3 mogelijkheden in de playground:
 
 ## Installatie
 
-Om de OSLO playground lokaal te gebruiken moeten volgende stappen uitgevoerd worden:
+### via Docker
+
+Om de applicatie via Docker te laten draaien, moet er eerst een image aangemaakt worden. Navigeer daarvoor eerst naar de map waar de `Dockerfile` staat. Omdat deze applicatie private npm packages van @govflanders bevat, moet er eerst een npm token aangemaakt worden. Eenmaal er een token is aangemaakt, kan de docker image gemaakt worden met volgend commando:
+
+```
+docker build --build-arg NPM_TOKEN=XXX -t playground .  # Vervang XXX door je eigen npm token
+```
+
+Nadat de docker image is gemaakt, kan deze uitgevoerd worden:
+```
+docker run -p 3000:3000 playground
+```
+
+### zonder Docker
+
+Het is ook mogelijk om de applicatie te starten zonder Docker. Hiervoor moet eerst het bestand `.npmrc` leeg gemaakt worden, anders wordt telkens een foutmelding weergegeven. Vervolgens dienen volgende commando's uitgevoerd te worden:
+
 ```
 > git clone https://github.com/Informatievlaanderen/OSLO-playground
 > cd OSLO-playground
 > npm install
+> npm run build
 > node app.js
 ```
+
+**Opmerking: indien je niet tot de organisatie @govflanders behoord op npmjs.com, dan zal het niet lukken om het __build__-script uit te voeren.** 
