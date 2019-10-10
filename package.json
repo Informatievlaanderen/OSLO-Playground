@@ -1,14 +1,14 @@
 {
   "name": "json_ld_playground_aiv",
   "version": "1.0.0",
-  "description": "",
+  "description": "JSON-LD Playground for Informatie Vlaanderen",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-css": "node-sass --include-path node_modules/@govflanders/ --include-path scss src/scss/style.scss  src/css/style.css",
-    "build": "webpack"
+    "build": "node-sass --include-path node_modules/@govflanders/ --include-path scss src/scss/style.scss  src/css/style.css",
+    "webpack" : "webpack"
   },
-  "author": "",
+  "author": "Dwight Van Lancker - Informatie VLaanderen",
   "license": "ISC",
   "dependencies": {
     "@govflanders/vl-ui-button": "^3.9.1",
