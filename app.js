@@ -105,13 +105,12 @@ router.post('/shacl-validation', async (req,res) => {
 
 });
 
-router.get('/examples/organisatie', async function(req,res) {
-    res.sendFile(path.join(__dirname + '/examples/organisatie.jsonld'));
+router.post('/examples', async function(req,res) {
+    let example = req.body.example;
+    example = example.toLowerCase();
+    res.sendFile(path.join(__dirname + '/examples/' + example + '.jsonld'));
 });
 
-router.get('/examples/adres', async function(req,res) {
-    res.sendFile(path.join(__dirname + '/examples/adres.jsonld'));
-});
 
 
 

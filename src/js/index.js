@@ -3,8 +3,10 @@ const jsonld = new window.jsonld;
 //import { Select } from '@govflanders/vl-ui-select';
 //import { Sidenavigation } from '@govflanders/vl-ui-side-navigation';
 
+// In the end, there should be 1 array
 const shaclOptions = ["Adresregister", "Besluit Publicatie", "Dienstencataloog", "Generiek-basis", "Generiek terugmeldfaciliteit",
     "Notificatie-basis", "Organisatie-basis", "Persoon-basis", "Subsidieregister", "Contactvoorkeuren", "Dienst transactiemodel", "Vlaamse codex"];
+const examples = ["Organisatie", "Adres", "Persoon"];
 
 let currentOption = "";
 
@@ -18,14 +20,36 @@ window.onload = function () {
 function init(){
     // See parsing as default
     parseClick();
+    fillExampleSelector();
 
-    // Parse, framing and shacl buttons - add functions
+    // Parse and shacl buttons - add functions
     document.getElementById('parse_option_button').onclick = function(){parseClick};
     document.getElementById('parse_option_button').addEventListener("click", parseClick);
-    document.getElementById('shacl_option_button').onclick = function(){shaclClick};
-    document.getElementById('shacl_option_button').addEventListener("click", shaclClick);
-    document.getElementById('frame_option_button').onclick = function(){frameClick()};
-    document.getElementById('frame_option_button').addEventListener("click", frameClick);
+    //document.getElementById('shacl_option_button').onclick = function(){shaclClick};
+    //document.getElementById('shacl_option_button').addEventListener("click", shaclClick);
+
+    // Example selector
+    document.getElementById('example_ap').onchange = function(){
+        var chosenoption= this.options[this.selectedIndex].value;
+
+
+        if(chosenoption !== 'nothing'){
+            let req = new XMLHttpRequest();
+            let URL = 'http://localhost:3000/examples';
+
+            req.open('POST', URL);
+            req.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
+            req.onload = function(){
+                document.getElementById('ld_input_area').value = req.response;
+            };
+
+            req.send("example=" + chosenoption);
+        } else {
+            document.getElementById('ld_input_area').value = "";
+        }
+    };
+    //document.getElementById('example_ap').addEventListener("onchange", getSelectedExample);
 
     // Execute button - execute the chosen request (framing or shacl validation)
     document.getElementById('execute_button').onclick = function(){executeRequest};
@@ -34,15 +58,6 @@ function init(){
     // Reset button
     document.getElementById('reset_button').onclick = function(){reset};
     document.getElementById('reset_button').addEventListener("click", reset);
-
-
-    // Buttons for examples - to generate examples for the user
-    document.getElementById('organization_button').onclick = function(){getOrganisationTemplate};
-    document.getElementById('organization_button').addEventListener("click", getOrganisationTemplate);
-    document.getElementById('address_button').onclick = function(){getAddressTemplate};
-    document.getElementById('address_button').addEventListener("click", getAddressTemplate);
-    /*document.getElementById('building_button').onclick = function(){getBuildingTemplate};
-    document.getElementById('building_button').addEventListener("click", getBuildingTemplate);*/
 }
 
 
@@ -74,6 +89,21 @@ function fillShaclSelector(){
     }
 }
 
+function fillExampleSelector(){
+    let startOption = document.createElement('option');
+    startOption.value = "nothing";
+    startOption.innerHTML = "Kies een voorbeeld";
+
+    document.getElementById('example_ap').appendChild(startOption);
+    for(let i in examples){
+        let option = document.createElement("option");
+        option.value = examples[i];
+        option.innerHTML = examples[i];
+
+        document.getElementById('example_ap').appendChild(option);
+    }
+}
+
 /////////////////////////////////////////////////////////
 // Functions for parsing, frame and validation buttons //
 /////////////////////////////////////////////////////////
@@ -83,36 +113,10 @@ function parseClick(){
 
     document.getElementById('parse_option_button').className = "vl-button vl-button--secondary vl-button--icon-before";
     document.getElementById('shacl_option_button').className = "vl-button";
-    document.getElementById('frame_option_button').className = "vl-button";
-
-    document.getElementById('frame_area').style.display = "inline";
     document.getElementById('selection_div').style.display = "none";
-    document.getElementById('option_title').innerText = "JSON-LD Frame";
 
-    // Show framing area input
-    document.getElementById('ld_input_div').style.display = "inline";
 
     currentOption = "parse";
-}
-
-function frameClick(){
-    document.getElementById('left_div').className = "vl-col--6-12";
-    document.getElementById('right_div').style.display = "inline";
-
-    document.getElementById('frame_option_button').className = "vl-button vl-button--secondary vl-button--icon-before";
-    document.getElementById('shacl_option_button').className = "vl-button";
-    document.getElementById('parse_option_button').className = "vl-button";
-
-    document.getElementById('frame_area').style.display = "inline";
-    document.getElementById('frame_area').value = "{}";
-
-    document.getElementById('selection_div').style.display = "none";
-    document.getElementById('option_title').innerText = "JSON-LD Frame";
-
-    // Show framing area input
-    document.getElementById('ld_input_div').style.display = "inline";
-
-    currentOption = "frame";
 }
 
 function shaclClick(){
@@ -121,9 +125,7 @@ function shaclClick(){
 
     // Shacl validation button
     document.getElementById('shacl_option_button').className = "vl-button vl-button--secondary vl-button--icon-before";
-    document.getElementById('frame_option_button').className = "vl-button";
     document.getElementById('parse_option_button').className = "vl-button";
-    document.getElementById('frame_area').style.display = "none";
 
     // Dropdown with application profiles en title
     document.getElementById('selection_div').style.display = "inline";
@@ -131,32 +133,6 @@ function shaclClick(){
 
     currentOption = "shacl";
 }
-
-
-//////////////////////////////////////
-// Template generators for examples //
-//////////////////////////////////////
-function getOrganisationTemplate(){
-    let req = new XMLHttpRequest();
-    req.open('GET', 'http://localhost:3000/examples/organisatie');
-    req.onload = function(){
-        document.getElementById('ld_input_area').value = req.response;
-    };
-    req.send();
-}
-
-function getAddressTemplate(){
-    let req = new XMLHttpRequest();
-    req.open('GET', 'http://localhost:3000/examples/adres');
-    req.onload = function(){
-        document.getElementById('ld_input_area').value = req.response;
-    };
-    req.send();
-}
-
-// TODO : other examples --> person and gebouwen (of adres)
-
-////////////////////////////////////////
 
 ////////////////////
 // Parse function //
@@ -169,17 +145,6 @@ async function parseJsonLd(){
        document.getElementById('result_area').value = quads;
        document.getElementById('result_area').scrollIntoView();
     });
-}
-
-//////////////////////
-// Framing function //
-//////////////////////
-async function frame(){
-    var doc = JSON.parse(document.getElementById('ld_input_area').value);
-    var frame = JSON.parse(document.getElementById('frame_area').value);
-
-    const framed = await jsonld.frame(doc, frame);
-    document.getElementById('result_area').value = JSON.stringify(framed, null, 4);
 }
 
 //////////////////////

@@ -83,30 +83,22 @@
 
         <section class="vl-region">
             <div class="vl-grid vl-layout vl-typography">
-                <div class="vl-col--6-12">
-                    <h4 class="vl-title vl-title--h4 vl-u-align-left" style="display: inline;">
-                        Voorbeelden:
-                    </h4>
-                    <div class="vl-u-align-right" style="display: inline;">
-                        <button class="vl-button vl-button--narrow" id="organization_button">
-                            Organisatie
-                        </button>
-                        <button class="vl-button vl-button--narrow" id="address_button">
-                            Adres
-                        </button>
-                        <button class="vl-button vl-button--narrow vl-button--disabled" id="building_button" disabled>
-                            Gebouwenregister
-                        </button>
+                <div class="vl-col--6-12" style="display: inline!important;">
+                    <div class="vl-col--3-12" style="float:left;">
+                        <h4 class="vl-title vl-title--h4 vl-u-align-left">
+                            Voorbeelden:
+                        </h4>
+                    </div>
+                    <div class="vl-col--3-6" id="example_div" style="float:left;">
+                        <select name="vl-select-default" id="example_ap" class="vl-select--block vl-select vl-select--block" tabindex="0">
+                        </select>
                     </div>
                 </div>
                 <div class="vl-col--6-12">
                     <button class="vl-button" id="parse_option_button">
                         Parse
                     </button>
-                    <button class="vl-button" id="frame_option_button">
-                        Frame
-                    </button>
-                    <button class="vl-button" id="shacl_option_button">
+                    <button class="vl-button vl-button--disabled" disabled id="shacl_option_button">
                         SHACL validation
                     </button>
                 </div>
