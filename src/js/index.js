@@ -49,7 +49,6 @@ function init(){
             document.getElementById('ld_input_area').value = "";
         }
     };
-    //document.getElementById('example_ap').addEventListener("onchange", getSelectedExample);
 
     // Execute button - execute the chosen request (framing or shacl validation)
     document.getElementById('execute_button').onclick = function(){executeRequest};
