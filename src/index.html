@@ -98,7 +98,7 @@
                     <button class="vl-button" id="parse_option_button">
                         Parse
                     </button>
-                    <button class="vl-button vl-button--disabled" disabled id="shacl_option_button">
+                    <button class="vl-button"  id="shacl_option_button">
                         SHACL validation
                     </button>
                 </div>
@@ -115,22 +115,6 @@
                         <textarea class="vl-textarea vl-textarea--block" id="ld_input_area" name="ld_input_area" value="" cols="40" rows="16"></textarea>
                         <br>
                     </div>
-                    <!--<div id="shacl_input_div">
-                        <div class="vl-u-align-right" style="display: inline;">
-                            <button class="vl-button vl-button--narrow" id="shacl_url_option_button">
-                                URL
-                            </button>
-                            <button class="vl-button vl-button--narrow" id="shacl_textarea_option_button">
-                                Zelf input geven
-                            </button>
-                        </div>
-                        <div>
-                            <br>
-                            <input class="vl-input-field vl-input-field--block" type="text" id="shacl_url_input" name="shacl_url_input" value="" placeholder="Geef de URL op waarop de data gepubliceerd is die u wilt valideren." />
-                            <textarea class="vl-textarea vl-textarea--block" id="shacl_textarea_input" name="shacl_textarea_input" value="" cols="40" rows="16"></textarea>
-                        </div>
-                        <br>
-                    </div>-->
                     <button class="vl-button" id="execute_button">
                         Execute
                     </button>
@@ -140,11 +124,8 @@
                 </div>
 
                 <div class="vl-col--6-12" id="right_div">
-                    <h5 class="vl-title vl-title--h5" id="option_title">
-                        JSON-LD Frame
-                    </h5>
-                    <textarea class="vl-textarea vl-textarea--block" id="frame_area" name="frame_area" value="" cols="40" rows="16"></textarea>
                     <div id="selection_div" style="display: none;">
+                        Selecteer het OSLO² applicatieprofiel waartegen u wil valideren.
                         <select name="vl-select-default" id="selection_ap" class="vl-select--block vl-select vl-select--block" tabindex="0">
                         </select>
                     </div>

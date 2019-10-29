@@ -25,8 +25,8 @@ function init(){
     // Parse and shacl buttons - add functions
     document.getElementById('parse_option_button').onclick = function(){parseClick};
     document.getElementById('parse_option_button').addEventListener("click", parseClick);
-    //document.getElementById('shacl_option_button').onclick = function(){shaclClick};
-    //document.getElementById('shacl_option_button').addEventListener("click", shaclClick);
+    document.getElementById('shacl_option_button').onclick = function(){shaclClick};
+    document.getElementById('shacl_option_button').addEventListener("click", shaclClick);
 
     // Example selector
     document.getElementById('example_ap').onchange = function(){
