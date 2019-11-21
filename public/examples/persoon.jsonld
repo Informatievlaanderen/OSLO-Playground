@@ -1,0 +1,25 @@
+{
+  "@context" : [
+    "https://data.vlaanderen.be/context/persoon-basis.jsonld"
+  ],
+  "@id" : "http://example.org/id/person/123",
+  "voornaam" : "John",
+  "achternaam" : "Doe",
+  "volledigeNaam" : "John Doe",
+  "geslacht" : {
+    "@type" : "Geslacht",
+    "@value" : "http://publications.europa.eu/resource/authority/human-sex/MALE"
+  },
+  "heeftGeboorte" : {
+    "@type" : "Geboorte",
+    "datum" : "01-01-1900",
+    "land" : {
+      "@type" : "Plaats",
+      "plaatsnaam" : "België"
+    },
+    "plaats" : {
+      "@type" : "Plaats",
+      "plaatsnaam" : "Gent"
+    }
+  }
+}

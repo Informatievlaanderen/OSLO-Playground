@@ -1,39 +1,65 @@
 {
-  "name": "json_ld_playground_aiv",
-  "version": "1.0.0",
-  "description": "JSON-LD Playground for Informatie Vlaanderen",
-  "main": "index.js",
+  "name": "oslo-play",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node-sass --include-path node_modules/@govflanders/ --include-path scss src/scss/style.scss  src/css/style.css",
-    "webpack": "webpack"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
-  "author": "Dwight Van Lancker - Informatie VLaanderen",
-  "license": "ISC",
   "dependencies": {
-    "@govflanders/vl-ui-button": "^3.9.1",
-    "@govflanders/vl-ui-content-header": "^3.9.1",
-    "@govflanders/vl-ui-core": "^3.9.1",
-    "@govflanders/vl-ui-input-field": "^3.9.1",
-    "@govflanders/vl-ui-introduction": "^3.9.1",
-    "@govflanders/vl-ui-select": "^3.9.1",
-    "@govflanders/vl-ui-side-navigation": "^3.9.1",
-    "@govflanders/vl-ui-textarea": "^3.9.1",
-    "@govflanders/vl-ui-titles": "^3.9.1",
-    "@govflanders/vl-ui-typography": "^3.9.1",
-    "@govflanders/vl-ui-upload": "^3.9.1",
-    "@govflanders/vl-ui-util": "^3.9.1",
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "jsonld": "^1.8.0",
-    "n3": "^1.2.1",
+    "@govflanders/vl-ui-alert": "^3.10.2",
+    "@govflanders/vl-ui-button": "^3.10.2",
+    "@govflanders/vl-ui-content-header": "^3.10.2",
+    "@govflanders/vl-ui-core": "^3.10.2",
+    "@govflanders/vl-ui-data-table": "^3.10.2",
+    "@govflanders/vl-ui-introduction": "^3.10.2",
+    "@govflanders/vl-ui-select": "^3.10.2",
+    "@govflanders/vl-ui-side-navigation": "^3.10.2",
+    "@govflanders/vl-ui-tabs": "^3.10.2",
+    "@govflanders/vl-ui-textarea": "^3.10.2",
+    "@govflanders/vl-ui-titles": "^3.10.2",
+    "@govflanders/vl-ui-upload": "^3.10.2",
+    "@govflanders/vl-ui-vue-components": "^3.10.2",
+    "core-js": "^3.3.2",
+    "jsonld": "^1.8.1",
     "node-fetch": "^2.6.0",
-    "node-sass": "^4.12.0",
-    "path": "^0.12.7",
-    "shacl-js": "0.0.1"
+    "node-sass": "^4.13.0",
+    "rdf-parse": "^1.2.1",
+    "sass-loader": "^8.0.0",
+    "streamify-string": "^1.0.1",
+    "vue": "^2.6.10"
   },
   "devDependencies": {
-    "webpack": "^4.40.2",
-    "webpack-cli": "^3.3.9"
-  }
+    "@vue/cli-plugin-babel": "^4.0.0",
+    "@vue/cli-plugin-eslint": "^4.0.0",
+    "@vue/cli-service": "^4.0.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
 }
