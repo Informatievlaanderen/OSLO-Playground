@@ -1,0 +1,194 @@
+<template>
+    <vl-layout>
+        <vl-grid>
+            <vl-column width="7">
+                <vl-title tag-name="h4">Voorbeelden:</vl-title>
+                <vl-select
+                        @input="loadExample($event)"
+                        name="example_selector" id="example_selector">
+                    <option value="adres">
+                        Adres
+                    </option>
+                    <option
+                            value="persoon">
+                        Persoon
+                    </option>
+                    <option
+                            value="organisatie"
+                            disabled>
+                        Organisatie
+                    </option>
+                </vl-select>
+            </vl-column>
+            <vl-column width="5">
+                <vl-button @click="parse = true" style="margin-right: 7px;"
+                           :class="parse ? 'vl-button--secondary' : ''">JSON-LD Parsing
+                </vl-button>
+                <vl-button id="shacl_button" @click="parse = false" :class="!parse ? 'vl-button--secondary' : ''" disabled>Shacl Validation
+                </vl-button>
+            </vl-column>
+        </vl-grid>
+
+        <vl-grid v-if="parse === true">
+            <vl-column width="11">
+                <vl-textarea id="textarea1" v-model="input" rows="16"></vl-textarea>
+            </vl-column>
+            <vl-column>
+                <vl-button @click="sendDataToParse">Parse</vl-button>
+            </vl-column>
+        </vl-grid>
+
+        <vl-grid v-if="parse === false">
+            <vl-column width="7">
+                <vl-textarea id="textarea2" v-model="input" rows="16"></vl-textarea>
+            </vl-column>
+            <vl-column width="5">
+                <vl-tabs ref="tabs">
+                    <vl-tab label="OSLO Applicatieprofiel">
+                        <p>Selecteer hieronder het OSLO applicatie profiel waartegen u uw data wil valideren.</p>
+                        <vl-select v-model="applicationProfile">
+                            <option v-for="ap in applicationProfiles" v-bind:key="ap" :value="ap">{{ ap }}</option>
+                        </vl-select>
+                    </vl-tab>
+                    <vl-tab label="Eigen SHACL-bestand">
+                        <vl-upload
+                                id="shapeFile"
+                                name="shapeFile"
+                                @upload-file-added="fileAdded"
+                                url="https://httpbin.org/post"
+                                upload-drag-text="Sleep het SHACL-bestand naar hier om het toe te voegen."
+                                upload-label="SHACL-bestand toevoegen"
+                                max-files="1"
+                                max-files-msg="Je mag maar 1 bestand tegelijk uploaden"
+                                max-filesize="20000000"
+                                max-filesize-msg="Het bestand mag max 20000000 zijn."
+                                allowed-file-types=".ttl, .rdf, .xml, .json, .jsonld"/>
+                    </vl-tab>
+                </vl-tabs>
+
+                <br>
+                <vl-column>
+                    <vl-button @click="sendDataToValidate">Valideer</vl-button>
+                </vl-column>
+            </vl-column>
+        </vl-grid>
+    </vl-layout>
+</template>
+
+<script>
+    import fetch from 'node-fetch';
+    import EventBus from '../eventBus';
+
+    const config = require('../../config.js');
+
+
+    export default {
+        name: "PlaygroundComponent",
+        data() {
+            return {
+                parse: true,
+                applicationProfiles: [
+                    "Adresregister", "Besluit Publicatie", "Dienstencataloog", "Generiek-basis",
+                    "Generiek terugmeldfaciliteit", "Notificatie-basis", "Organisatie",
+                    "Persoon-basis", "Subsidieregister", "Contactvoorkeuren",
+                    "Dienst transactiemodel", "Vlaamse codex"
+                ],
+                applicationProfile: null,
+                input: null,
+                showResult: false,
+                shaclFile: null
+
+
+            }
+        },
+        methods: {
+            /* eslint-disable no-console */
+            enableTab(id) {
+                let el = document.getElementById(id);
+                el.onkeydown = function (e) {
+                    if (e.code == "Tab") { // tab was pressed
+
+                        // get caret position/selection
+                        var val = this.value,
+                            start = this.selectionStart,
+                            end = this.selectionEnd;
+
+                        // set textarea value to: text before caret + tab + text after caret
+                        this.value = val.substring(0, start) + '\t' + val.substring(end);
+
+                        // put caret at right position again
+                        this.selectionStart = this.selectionEnd = start + 1;
+
+                        // prevent the focus lose
+                        return false;
+
+                    }
+                };
+            },
+            loadExample(event) {
+                fetch(config.EXAMPLE_URL + event + '.jsonld').then(resp => resp.json()).then(data => {
+                    this.input = JSON.stringify(data, null, 4);
+                })
+            },
+            sendDataToParse() {
+                EventBus.$emit('parse:data', this.input);
+            },
+            async sendDataToValidate() {
+                let index = this.$refs.tabs.activeTabIndex;
+
+                if (index === 0) {
+                    let result = await fetch(config.FILE_CREATION_URL , {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({data: this.input, ap: this.applicationProfile, shaclFile: false})
+                    });
+                    //EventBus.$emit('validate:data', [this.input, this.applicationProfile, true]);
+                } else {
+                    EventBus.$emit('validate:data', {data: this.input, shacl: this.shaclFile, shaclFile: true});
+                }
+            },
+            fileAdded(file) {
+                this.shaclFile = file;
+            }
+
+        },
+        mounted() {
+            this.enableTab('textarea1');
+            this.enableTab('textarea2');
+        }
+    }
+</script>
+
+<style lang="scss">
+    @import "~@govflanders/vl-ui-core/src/scss/core";
+    @import "~@govflanders/vl-ui-textarea/src/scss/textarea";
+    @import "~@govflanders/vl-ui-titles/src/scss/titles";
+    @import "~@govflanders/vl-ui-select/src/scss/select";
+    @import "~@govflanders/vl-ui-button/src/scss/button";
+    @import "~@govflanders/vl-ui-tabs/src/scss/tabs";
+    @import "~@govflanders/vl-ui-upload/src/scss/upload";
+    @import "~@govflanders/vl-ui-alert/src/scss/alert";
+    @import "~@govflanders/vl-ui-data-table/src/scss/data-table";
+
+    .vl-textarea {
+        margin-top: 2%;
+        width: 100%;
+        resize: none;
+    }
+
+    .vl-select {
+        width: 50%;
+    }
+
+    // TODO: remove this styling if SHACL validation works
+    #shacl_button {
+        background-color: lightgrey;
+    }
+
+    #shacl_button:hover {
+        background-color: lightgrey;
+    }
+
+</style>

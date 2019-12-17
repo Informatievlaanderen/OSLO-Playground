@@ -19,5 +19,6 @@ RUN rm -f .npmrc
 COPY . .
 RUN npm run-script build
 
-EXPOSE 3000
-CMD [ "node", "app.js"]
+EXPOSE 3001 8080
+
+CMD [ "node", "app.js", "npm", "run", "serve"]
