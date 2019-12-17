@@ -1,5 +1,5 @@
 //require Express
-const express = require('express');
+/*const express = require('express');
 // instanciate an instance of express and hold the value in a constant called app
 const app = express();
 //require the body-parser library. will be used for parsing body requests
@@ -40,3 +40,4 @@ app.post('/validation', async function (req, res) {
 app.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
+*/
