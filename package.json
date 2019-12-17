@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "start": "node app.js",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -21,13 +22,19 @@
     "@govflanders/vl-ui-titles": "^3.10.2",
     "@govflanders/vl-ui-upload": "^3.10.2",
     "@govflanders/vl-ui-vue-components": "^3.10.2",
+    "body-parser": "^1.19.0",
     "core-js": "^3.3.2",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
     "jsonld": "^1.8.1",
     "node-fetch": "^2.6.0",
     "node-sass": "^4.13.0",
     "rdf-parse": "^1.2.1",
+    "request": "^2.88.0",
     "sass-loader": "^8.0.0",
+    "shacl-js": "0.0.1",
     "streamify-string": "^1.0.1",
+    "temp-write": "^4.0.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {

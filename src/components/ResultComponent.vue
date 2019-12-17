@@ -9,7 +9,7 @@
                     <vl-tab label="N-Quads">
                         <vl-textarea v-model="nQuadsData" rows="16" mod-disabled></vl-textarea>
                     </vl-tab>
-                    <vl-tab label="Tabel">
+                    <vl-tab label="Tabel" class="vl-u-table-overflow">
                         <vl-data-table>
                             <thead>
                             <tr>
@@ -42,9 +42,11 @@
 
 <script>
     /* eslint-disable no-console */
-    import EventBus from '../eventBus'
+    import EventBus from '../eventBus';
     import jsonld from 'jsonld';
     import rdfParser from "rdf-parse";
+    const config = require('../../config.js');
+    const shacl = require('shacl-js');
 
 
     export default {
@@ -60,9 +62,10 @@
             parseData(data) {
                 if (data) {
                     // TODO: this should be achieved by only using one method
-                    // Both methods give other subjects (e.g. _:bà vs b4)
+                    // Both methods give other subjects (e.g. _:b0 vs b4)
 
                     // N-Quads
+                    // TODO: create RDFObject
                     jsonld.toRDF(JSON.parse(data), {format: 'application/n-quads'}, (err, quads) => {
                         if (err) {
                             console.log(err);
@@ -72,6 +75,7 @@
                             this.showResult = true;
                         }
                     });
+
 
                     // Table
                     const dataStream = require('streamify-string')(data);
@@ -89,10 +93,15 @@
                             this.showResult = true;
                         });
                 }
+            },
+            validateData([data, shacl, isApplicationProfile]){
+                // TODO
+                console.log(data);
             }
         },
         mounted() {
             EventBus.$on('parse:data', data => this.parseData(data));
+            //EventBus.$on('validate:data', input => this.validateData(input));
         }
     }
 </script>

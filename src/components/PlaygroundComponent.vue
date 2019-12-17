@@ -24,14 +24,14 @@
                 <vl-button @click="parse = true" style="margin-right: 7px;"
                            :class="parse ? 'vl-button--secondary' : ''">JSON-LD Parsing
                 </vl-button>
-                <vl-button @click="parse = false" :class="!parse ? 'vl-button--secondary' : ''">Shacl Validation
+                <vl-button id="shacl_button" @click="parse = false" :class="!parse ? 'vl-button--secondary' : ''" disabled>Shacl Validation
                 </vl-button>
             </vl-column>
         </vl-grid>
 
         <vl-grid v-if="parse === true">
             <vl-column width="11">
-                <vl-textarea v-model="input" rows="16"></vl-textarea>
+                <vl-textarea id="textarea1" v-model="input" rows="16"></vl-textarea>
             </vl-column>
             <vl-column>
                 <vl-button @click="sendDataToParse">Parse</vl-button>
@@ -40,10 +40,10 @@
 
         <vl-grid v-if="parse === false">
             <vl-column width="7">
-                <vl-textarea v-model="input" rows="16"></vl-textarea>
+                <vl-textarea id="textarea2" v-model="input" rows="16"></vl-textarea>
             </vl-column>
             <vl-column width="5">
-                <vl-tabs>
+                <vl-tabs ref="tabs">
                     <vl-tab label="OSLO Applicatieprofiel">
                         <p>Selecteer hieronder het OSLO applicatie profiel waartegen u uw data wil valideren.</p>
                         <vl-select v-model="applicationProfile">
@@ -54,6 +54,7 @@
                         <vl-upload
                                 id="shapeFile"
                                 name="shapeFile"
+                                @upload-file-added="fileAdded"
                                 url="https://httpbin.org/post"
                                 upload-drag-text="Sleep het SHACL-bestand naar hier om het toe te voegen."
                                 upload-label="SHACL-bestand toevoegen"
@@ -61,15 +62,14 @@
                                 max-files-msg="Je mag maar 1 bestand tegelijk uploaden"
                                 max-filesize="20000000"
                                 max-filesize-msg="Het bestand mag max 20000000 zijn."
-                                allowed-file-types="application/pdf"/>
+                                allowed-file-types=".ttl, .rdf, .xml, .json, .jsonld"/>
                     </vl-tab>
                 </vl-tabs>
 
-                <vl-region>
-                    <vl-column>
-                        <vl-button>Valideer</vl-button>
-                    </vl-column>
-                </vl-region>
+                <br>
+                <vl-column>
+                    <vl-button @click="sendDataToValidate">Valideer</vl-button>
+                </vl-column>
             </vl-column>
         </vl-grid>
     </vl-layout>
@@ -77,9 +77,9 @@
 
 <script>
     import fetch from 'node-fetch';
-    import jsonld from 'jsonld';
-    import rdfParser from "rdf-parse";
-    import EventBus from '../eventBus'
+    import EventBus from '../eventBus';
+
+    const config = require('../../config.js');
 
 
     export default {
@@ -89,27 +89,74 @@
                 parse: true,
                 applicationProfiles: [
                     "Adresregister", "Besluit Publicatie", "Dienstencataloog", "Generiek-basis",
-                    "Generiek terugmeldfaciliteit", "Notificatie-basis", "Organisatie-basis",
+                    "Generiek terugmeldfaciliteit", "Notificatie-basis", "Organisatie",
                     "Persoon-basis", "Subsidieregister", "Contactvoorkeuren",
                     "Dienst transactiemodel", "Vlaamse codex"
                 ],
                 applicationProfile: null,
                 input: null,
-                showResult: false
+                showResult: false,
+                shaclFile: null
 
 
             }
         },
         methods: {
             /* eslint-disable no-console */
+            enableTab(id) {
+                let el = document.getElementById(id);
+                el.onkeydown = function (e) {
+                    if (e.code == "Tab") { // tab was pressed
+
+                        // get caret position/selection
+                        var val = this.value,
+                            start = this.selectionStart,
+                            end = this.selectionEnd;
+
+                        // set textarea value to: text before caret + tab + text after caret
+                        this.value = val.substring(0, start) + '\t' + val.substring(end);
+
+                        // put caret at right position again
+                        this.selectionStart = this.selectionEnd = start + 1;
+
+                        // prevent the focus lose
+                        return false;
+
+                    }
+                };
+            },
             loadExample(event) {
-                fetch('http://localhost:8080/examples/' + event + '.jsonld').then(resp => resp.json()).then(data => {
+                fetch(config.EXAMPLE_URL + event + '.jsonld').then(resp => resp.json()).then(data => {
                     this.input = JSON.stringify(data, null, 4);
                 })
             },
             sendDataToParse() {
                 EventBus.$emit('parse:data', this.input);
+            },
+            async sendDataToValidate() {
+                let index = this.$refs.tabs.activeTabIndex;
+
+                if (index === 0) {
+                    let result = await fetch(config.FILE_CREATION_URL , {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({data: this.input, ap: this.applicationProfile, shaclFile: false})
+                    });
+                    //EventBus.$emit('validate:data', [this.input, this.applicationProfile, true]);
+                } else {
+                    EventBus.$emit('validate:data', {data: this.input, shacl: this.shaclFile, shaclFile: true});
+                }
+            },
+            fileAdded(file) {
+                this.shaclFile = file;
             }
+
+        },
+        mounted() {
+            this.enableTab('textarea1');
+            this.enableTab('textarea2');
         }
     }
 </script>
@@ -133,6 +180,15 @@
 
     .vl-select {
         width: 50%;
+    }
+
+    // TODO: remove this styling if SHACL validation works
+    #shacl_button {
+        background-color: lightgrey;
+    }
+
+    #shacl_button:hover {
+        background-color: lightgrey;
     }
 
 </style>
