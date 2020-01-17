@@ -1,24 +1,18 @@
-FROM node:10
-# Create app directory
-WORKDIR /usr/src/app
+FROM node:latest as build-stage
+WORKDIR /app
 
 ARG NPM_TOKEN
 COPY .npmrc .npmrc
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
 COPY package*.json ./
 
 RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
 RUN rm -f .npmrc
 
-# Bundle app source
-COPY . .
-RUN npm run-script build
+COPY ./ .
+RUN npm run build
 
-EXPOSE 3001 8080
-
-CMD [ "node", "app.js", "npm", "run", "serve"]
+FROM nginx as production-stage
+RUN mkdir /app
+COPY --from=build-stage /app/dist /app
+COPY nginx.conf /etc/nginx/nginx.conf
