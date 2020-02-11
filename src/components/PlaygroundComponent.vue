@@ -50,20 +50,6 @@
                             <option v-for="ap in applicationProfiles" v-bind:key="ap" :value="ap">{{ ap }}</option>
                         </vl-select>
                     </vl-tab>
-                    <vl-tab label="Eigen SHACL-bestand">
-                        <vl-upload
-                                id="shapeFile"
-                                name="shapeFile"
-                                @upload-file-added="fileAdded"
-                                url="https://httpbin.org/post"
-                                upload-drag-text="Sleep het SHACL-bestand naar hier om het toe te voegen."
-                                upload-label="SHACL-bestand toevoegen"
-                                max-files="1"
-                                max-files-msg="Je mag maar 1 bestand tegelijk uploaden"
-                                max-filesize="20000000"
-                                max-filesize-msg="Het bestand mag max 20000000 zijn."
-                                allowed-file-types=".ttl, .rdf, .xml, .json, .jsonld"/>
-                    </vl-tab>
                 </vl-tabs>
 
                 <br>
