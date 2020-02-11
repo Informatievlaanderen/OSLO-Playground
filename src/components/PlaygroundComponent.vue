@@ -138,6 +138,8 @@
                         body: body
                     }).then(res => {
                         EventBus.$emit('validationResult', res);
+                    }).catch( err => {
+                        EventBus.$emit('validationError', err);
                     })
                 }
             },

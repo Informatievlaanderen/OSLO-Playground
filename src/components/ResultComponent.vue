@@ -1,6 +1,6 @@
 <template>
     <vl-layout>
-        <vl-grid v-if="error != null">
+        <vl-grid v-if="parseResult">
             <vl-column width="11">
                 <vl-alert v-if="!error"
                           icon="calendar_check"
@@ -10,6 +10,14 @@
                 <vl-alert v-if="error"
                           icon="warning"
                           title="Er zijn één of meer fouten gevonden in de data"
+                          mod-error
+                />
+            </vl-column>
+        </vl-grid>
+        <vl-grid v-if="validationResult && validationError">
+            <vl-column width="11">
+                <vl-alert icon="warning"
+                          title="Er ging iets mis bij het valideren van de data"
                           mod-error
                 />
             </vl-column>
@@ -79,7 +87,8 @@
                 error: null,
                 parseResult: false,
                 validationResult: false,
-                validationData: null
+                validationData: null,
+                validationError: false
             }
         },
         methods: {
@@ -131,20 +140,24 @@
             },
             processValidationResult(result) {
                 this.validationResult = true;
+                this.validationError = false;
                 this.parseResult = false;
                 this.showResult = true;
 
                 const decoder = new TextDecoder('utf-8');
                 const reader = result.body.getReader();
                 reader.read().then(({value, done}) => {
-                    console.log(decoder.decode(value));
                     this.validationData = decoder.decode(value);
                 });
+            },
+            showValidationError(error){
+                this.validationError = true;
             }
         },
         mounted() {
             EventBus.$on('parse:data', data => this.parseData(data));
             EventBus.$on('validationResult', result => this.processValidationResult(result));
+            EventBus.$on('validationError', err => this.showValidationError(err));
         }
     }
 </script>
