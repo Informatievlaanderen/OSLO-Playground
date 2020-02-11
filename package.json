@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@govflanders/vl-ui-alert": "^3.10.2",
+    "@govflanders/vl-ui-alert": "^3.10.9",
     "@govflanders/vl-ui-button": "^3.10.2",
     "@govflanders/vl-ui-content-header": "^3.10.2",
     "@govflanders/vl-ui-core": "^3.10.2",

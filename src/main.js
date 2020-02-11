@@ -23,7 +23,7 @@ import {
   VlTab,
   VlUpload,
   VlAlert,
-  VlDataTable
+  VlDataTable,
 } from'@govflanders/vl-ui-vue-components';
 
 Vue.component('vl-region', VlRegion);

@@ -24,7 +24,7 @@
                 <vl-button @click="parse = true" style="margin-right: 7px;"
                            :class="parse ? 'vl-button--secondary' : ''">JSON-LD Parsing
                 </vl-button>
-                <vl-button id="shacl_button" @click="parse = false" :class="!parse ? 'vl-button--secondary' : ''" disabled>Shacl Validation
+                <vl-button id="shacl_button" @click="parse = false" :class="!parse ? 'vl-button--secondary' : ''">Shacl Validation
                 </vl-button>
             </vl-column>
         </vl-grid>
@@ -47,7 +47,7 @@
                     <vl-tab label="OSLO Applicatieprofiel">
                         <p>Selecteer hieronder het OSLO applicatie profiel waartegen u uw data wil valideren.</p>
                         <vl-select v-model="applicationProfile">
-                            <option v-for="ap in applicationProfiles" v-bind:key="ap" :value="ap">{{ ap }}</option>
+                            <option v-for="ap in applicationProfiles" v-bind:key="ap" :value="ap.toLowerCase()">{{ ap.replace('_', ' ') }}</option>
                         </vl-select>
                     </vl-tab>
                 </vl-tabs>
@@ -74,10 +74,9 @@
             return {
                 parse: true,
                 applicationProfiles: [
-                    "Adresregister", "Besluit Publicatie", "Dienstencataloog", "Generiek-basis",
-                    "Generiek terugmeldfaciliteit", "Notificatie-basis", "Organisatie",
-                    "Persoon-basis", "Subsidieregister", "Contactvoorkeuren",
-                    "Dienst transactiemodel", "Vlaamse codex"
+                    "Adresregister", "Besluit_publicatie", "Dienstencataloog", "Generiek_basis",
+                    "Generieke_terugmeldfaciliteit", "Notificatie_basis", "Organisatie_basis", "Persoon_basis", "Subsidieregister",
+                    "Contactvoorkeuren", "Dienst_transactiemodel", "Vlaamse_codex"
                 ],
                 applicationProfile: null,
                 input: null,
@@ -120,19 +119,26 @@
                 EventBus.$emit('parse:data', this.input);
             },
             async sendDataToValidate() {
-                let index = this.$refs.tabs.activeTabIndex;
+                if(this.input && this.applicationProfile){
+                    const base64 = btoa(this.input);
+                    const body = JSON.stringify({
+                        contentToValidate: base64,
+                        embeddingMethod: 'BASE64',
+                        contentSyntax: 'application/ld+json',
+                        validationType: this.applicationProfile,
+                        reportSyntax: 'text/turtle'
+                    });
 
-                if (index === 0) {
-                    let result = await fetch(config.FILE_CREATION_URL , {
+                    // Send content to validator
+                    fetch(config.SHACL_VALIDATION_URL, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({data: this.input, ap: this.applicationProfile, shaclFile: false})
-                    });
-                    //EventBus.$emit('validate:data', [this.input, this.applicationProfile, true]);
-                } else {
-                    EventBus.$emit('validate:data', {data: this.input, shacl: this.shaclFile, shaclFile: true});
+                        body: body
+                    }).then(res => {
+                        EventBus.$emit('validationResult', res);
+                    })
                 }
             },
             fileAdded(file) {
@@ -141,8 +147,8 @@
 
         },
         mounted() {
-            this.enableTab('textarea1');
-            this.enableTab('textarea2');
+            //this.enableTab('textarea1');
+            //this.enableTab('textarea2');
         }
     }
 </script>
@@ -166,15 +172,6 @@
 
     .vl-select {
         width: 50%;
-    }
-
-    // TODO: remove this styling if SHACL validation works
-    #shacl_button {
-        background-color: lightgrey;
-    }
-
-    #shacl_button:hover {
-        background-color: lightgrey;
     }
 
 </style>
