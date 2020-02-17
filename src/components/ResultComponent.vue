@@ -8,7 +8,7 @@
                           mod-success
                 />
                 <vl-alert v-if="error"
-                          icon="warning"
+                          icon="cross"
                           title="Er zijn één of meer fouten gevonden in de data"
                           mod-error
                 />

@@ -13,11 +13,6 @@
                             value="persoon">
                         Persoon
                     </option>
-                    <option
-                            value="organisatie"
-                            disabled>
-                        Organisatie
-                    </option>
                 </vl-select>
             </vl-column>
             <vl-column width="5">
