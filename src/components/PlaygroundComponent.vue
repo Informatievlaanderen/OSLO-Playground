@@ -59,10 +59,7 @@
 <script>
     import fetch from 'node-fetch';
     import EventBus from '../eventBus';
-
     const config = require('../../config.js');
-
-
     export default {
         name: "PlaygroundComponent",
         data() {
@@ -77,8 +74,6 @@
                 input: null,
                 showResult: false,
                 shaclFile: null
-
-
             }
         },
         methods: {
@@ -87,21 +82,16 @@
                 let el = document.getElementById(id);
                 el.onkeydown = function (e) {
                     if (e.code == "Tab") { // tab was pressed
-
                         // get caret position/selection
                         var val = this.value,
                             start = this.selectionStart,
                             end = this.selectionEnd;
-
                         // set textarea value to: text before caret + tab + text after caret
                         this.value = val.substring(0, start) + '\t' + val.substring(end);
-
                         // put caret at right position again
                         this.selectionStart = this.selectionEnd = start + 1;
-
                         // prevent the focus lose
                         return false;
-
                     }
                 };
             },
@@ -123,7 +113,6 @@
                         validationType: this.applicationProfile,
                         reportSyntax: 'text/turtle'
                     });
-
                     // Send content to validator
                     fetch(config.SHACL_VALIDATION_URL, {
                         method: 'POST',
@@ -141,7 +130,6 @@
             fileAdded(file) {
                 this.shaclFile = file;
             }
-
         },
         mounted() {
             //this.enableTab('textarea1');
@@ -160,15 +148,12 @@
     @import "~@govflanders/vl-ui-upload/src/scss/upload";
     @import "~@govflanders/vl-ui-alert/src/scss/alert";
     @import "~@govflanders/vl-ui-data-table/src/scss/data-table";
-
     .vl-textarea {
         margin-top: 2%;
         width: 100%;
         resize: none;
     }
-
     .vl-select {
         width: 50%;
     }
-
 </style>

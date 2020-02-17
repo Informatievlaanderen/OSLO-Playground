@@ -35,5 +35,4 @@
     @import "~@govflanders/vl-ui-core/src/scss/core";
     @import "~@govflanders/vl-ui-introduction/src/scss/introduction";
     @import "~@govflanders/vl-ui-side-navigation/src/scss/side-navigation";
-
 </style>

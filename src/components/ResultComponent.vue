@@ -70,13 +70,8 @@
 <script>
     /* eslint-disable no-console */
     import EventBus from '../eventBus';
-    import jsonld from 'jsonld';
     import rdfParser from "rdf-parse";
-
-    const config = require('../../config.js');
-    const shacl = require('shacl-js');
-
-
+    const jsonld = require("jsonld");
     export default {
         name: "ResultComponent",
         data() {
@@ -92,27 +87,18 @@
             }
         },
         methods: {
-            parseData(data) {
+            async parseData(data) {
                 this.parseResult = true;
                 this.validationResult = false;
                 try {
                     if (data) {
                         // TODO: this should be achieved by only using one method
                         // Both methods give other subjects (e.g. _:b0 vs b4)
-
                         // N-Quads
                         // TODO: create RDFObject
-                        jsonld.toRDF(JSON.parse(data), {format: 'application/n-quads'}, (err, quads) => {
-                            if (err) {
-                                this.showResult = false;
-                                this.error = true;
-                            } else {
-                                this.nQuadsData = quads;
-                                this.showResult = true;
-                                this.error = false;
-                            }
-                        });
+                        // TODO: error handling when jsonld.toRDF fails
 
+                        this.nQuadsData = await jsonld.toRDF(JSON.parse(data), {format: 'application/n-quads'});
 
                         // Table
                         const dataStream = require('streamify-string')(data);
@@ -135,15 +121,12 @@
                     this.error = true;
                     this.showResult = false;
                 }
-
-
             },
             processValidationResult(result) {
                 this.validationResult = true;
                 this.validationError = false;
                 this.parseResult = false;
                 this.showResult = true;
-
                 const decoder = new TextDecoder('utf-8');
                 const reader = result.body.getReader();
                 reader.read().then(({value, done}) => {
@@ -169,5 +152,4 @@
     @import "~@govflanders/vl-ui-tabs/src/scss/tabs";
     @import "~@govflanders/vl-ui-data-table/src/scss/data-table";
     @import "~@govflanders/vl-ui-alert/src/scss/alert";
-
 </style>
