@@ -92,6 +92,12 @@
     @import "~@govflanders/vl-ui-button/src/scss/button";
     @import "~@govflanders/vl-ui-alert/src/scss/alert";
 
+    .vl-textarea {
+        margin-top: 2%;
+        width: 100%;
+        resize: none;
+    }
+
     .vl-alert {
         color: darkred;
     }

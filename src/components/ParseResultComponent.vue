@@ -50,5 +50,12 @@
 </script>
 
 <style lang="scss">
+    @import "~@govflanders/vl-ui-core/src/scss/core";
+    @import "~@govflanders/vl-ui-tabs/src/scss/tabs";
+    @import "~@govflanders/vl-ui-data-table/src/scss/data-table";
+
+    vl-data-table tbody tr {
+        font-size: 50% !important;
+    }
 
 </style>
