@@ -1,4 +1,4 @@
 module.exports = {
-    EXAMPLE_URL : 'http://localhost:8081/examples/',
-    SHACL_VALIDATION_URL:  'http://localhost:8080/shacl/applicatieprofielen/api/validate',
+    EXAMPLE_URL : 'http://localhost:8080/examples/',
+    SHACL_VALIDATION:  'https://test.data.vlaanderen.be/shacl-validator-backend/shacl/applicatieprofielen/api/validate',
 }

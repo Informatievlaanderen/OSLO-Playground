@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
+import store from "./store/store";
 
 Vue.config.productionTip = false
 
@@ -24,6 +25,7 @@ import {
   VlUpload,
   VlAlert,
   VlDataTable,
+  VlActionGroup
 } from'@govflanders/vl-ui-vue-components';
 
 Vue.component('vl-region', VlRegion);
@@ -42,13 +44,14 @@ Vue.component('vl-tab', VlTab);
 Vue.component('vl-upload', VlUpload);
 Vue.component('vl-alert', VlAlert);
 Vue.component('vl-data-table', VlDataTable);
-
 Vue.component('vl-button', VlButton);
+Vue.component('vl-action-group', VlActionGroup);
+Vue.component('vl-alert', VlAlert)
 
 Vue.use(VlCore);
 Vue.use(VlUtil);
 
-
 new Vue({
+  store,
   render: h => h(App),
 }).$mount('#app')
