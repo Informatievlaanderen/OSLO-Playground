@@ -30,9 +30,9 @@
                             </tbody>
                         </vl-data-table>
                     </vl-tab>
-                    <vl-tab label="Visualisatie">
+                    <!--<vl-tab label="Visualisatie">
 
-                    </vl-tab>
+                    </vl-tab>-->
                 </vl-tabs>
             </vl-column>
         </vl-grid>
@@ -44,7 +44,7 @@
         name: "ParseResultComponent",
         props: {
             quads: Array,
-            quadString: String
+            quadString: String,
         }
     }
 </script>

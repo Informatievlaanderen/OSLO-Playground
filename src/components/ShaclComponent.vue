@@ -58,6 +58,9 @@
     export default {
         name: "ShaclComponent",
         components: {ShaclResultComponent},
+        props: {
+            documentData: Object
+        },
         data() {
             return {
                 input: '',
@@ -123,6 +126,13 @@
         beforeDestroy() {
             if (this.input !== store.state.data) {
                 store.commit('updateData', this.input);
+            }
+        },
+        watch: {
+            documentData: function (value) {
+                if(value != null){
+                    this.input = JSON.stringify(value, null, 4);
+                }
             }
         }
     }

@@ -25,7 +25,9 @@ import {
   VlUpload,
   VlAlert,
   VlDataTable,
-  VlActionGroup
+  VlActionGroup,
+  VlInputField,
+  VlIcon
 } from'@govflanders/vl-ui-vue-components';
 
 Vue.component('vl-region', VlRegion);
@@ -46,10 +48,14 @@ Vue.component('vl-alert', VlAlert);
 Vue.component('vl-data-table', VlDataTable);
 Vue.component('vl-button', VlButton);
 Vue.component('vl-action-group', VlActionGroup);
-Vue.component('vl-alert', VlAlert)
+Vue.component('vl-alert', VlAlert);
+Vue.component('vl-input-field', VlInputField);
+Vue.component('vl-icon', VlIcon);
+
 
 Vue.use(VlCore);
 Vue.use(VlUtil);
+
 
 new Vue({
   store,

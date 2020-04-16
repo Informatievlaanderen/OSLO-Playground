@@ -1,8 +1,10 @@
 <template>
     <div>
-        <vl-grid>
+        <vl-grid mod-stacked>
             <vl-column width="11">
-                <vl-textarea v-model="input" rows="16"></vl-textarea>
+                <!--<vl-textarea id="inputArea" @keydown.tab.prevent="insertTab($event)" v-model="input" rows="16"></vl-textarea>-->
+                <vl-textarea id="inputArea" @keydown.tab.prevent="tab($event)" @keyup="format($event)" v-model="input"
+                             rows="16"></vl-textarea>
             </vl-column>
             <vl-column>
                 <vl-button @click="parse">Parse</vl-button>
@@ -28,13 +30,19 @@
     export default {
         name: "ParseComponent",
         components: {ParseResultComponent},
+        props: {
+          documentData: Object
+        },
         data() {
             return {
                 input: '',
                 quads: [],
                 quadString: '',
                 error: false,
-                errorMessage: ''
+                errorMessage: '',
+                editorOptions: {
+                    'mode': 'code'
+                }
             }
         },
         methods: {
@@ -66,13 +74,43 @@
                             this.quads.push(quad);
                         })
                         .on('error', console.error)
-                        .on('end', () => {});
+                        .on('end', () => {
+                        });
 
 
                 } catch (e) {
                     this.error = true;
                     this.errorMessage = e.message;
                 }
+            },
+            tab(event) {
+                const startPos = event.target.selectionStart;
+                const endPos = event.target.selectionEnd;
+                this.input = this.input.substring(0, startPos) + '\t' + this.input.substring(endPos);
+                this.setCaretPosition(startPos + 1);
+            },
+            format(event) {
+                const startPos = event.target.selectionStart;
+                const endPos = event.target.selectionEnd;
+
+                // '{'
+                if (event.keyCode === 57) {
+                    this.input = this.input.substring(0, startPos) + '}' + this.input.substring(endPos);
+                    this.setCaretPosition(startPos);
+                }
+
+                // '"'
+                if(event.keyCode === 51){
+                    this.input = this.input.substring(0, startPos) + '"' + this.input.substring(endPos);
+                    this.setCaretPosition(startPos);
+                }
+            },
+            setCaretPosition(position) {
+                const textarea = document.getElementById('inputArea');
+                this.$nextTick(() => {
+                    textarea.focus();
+                    textarea.setSelectionRange(position, position);
+                });
             }
         },
         mounted() {
@@ -81,6 +119,13 @@
         beforeDestroy() {
             if (this.input !== store.state.data) {
                 store.commit('updateData', this.input);
+            }
+        },
+        watch: {
+            documentData: function (value) {
+                if(value != null){
+                    this.input = JSON.stringify(value, null, 4);
+                }
             }
         }
     }
@@ -101,5 +146,9 @@
     .vl-alert {
         color: darkred;
     }
+
+    /*.jsoneditor-poweredBy {
+        display: none;
+    }*/
 
 </style>
