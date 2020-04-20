@@ -2,7 +2,8 @@
     <div>
         <vl-grid>
             <vl-column width="7">
-                <vl-textarea v-model="input" rows="16"></vl-textarea>
+                <vl-textarea id="inputArea" @keydown.tab.prevent="tab($event)" @keyup="format($event)" v-model="input"
+                             rows="16"></vl-textarea>
             </vl-column>
             <vl-column width="4">
                 <vl-grid mod-stacked>
@@ -52,6 +53,7 @@
 <script>
     import store from "../store/store";
     import ShaclResultComponent from "./ShaclResultComponent";
+
     const config = require('../../config');
     const Base64 = require('js-base64').Base64;
 
@@ -81,17 +83,17 @@
             }
         },
         methods: {
-            validate(){
+            validate() {
 
                 // Update store with latest version of the input (in case it has changed)
                 if (this.input !== store.state.data) {
                     store.commit('updateData', this.input);
                 }
 
-                if(this.apChoice && this.formatChoice){
+                if (this.apChoice && this.formatChoice) {
                     this.showError = false;
 
-                    const body =JSON.stringify({
+                    const body = JSON.stringify({
                         contentToValidate: Base64.encode(this.input),
                         embeddingMethod: "BASE64",
                         contentSyntax: 'application/ld+json',
@@ -110,7 +112,7 @@
                         this.fetchErrorMessage = '';
 
                         this.result = res;
-                    }).catch( (reason) => {
+                    }).catch((reason) => {
                         this.fetchError = true;
                         this.fetchErrorMessage = reason;
                     });
@@ -118,6 +120,35 @@
                     // Show message that an AP and format must be chosen
                     this.showError = true;
                 }
+            },
+            tab(event) {
+                const startPos = event.target.selectionStart;
+                const endPos = event.target.selectionEnd;
+                this.input = this.input.substring(0, startPos) + '\t' + this.input.substring(endPos);
+                this.setCaretPosition(startPos + 1);
+            },
+            format(event) {
+                const startPos = event.target.selectionStart;
+                const endPos = event.target.selectionEnd;
+
+                // '{'
+                if (event.keyCode === 57) {
+                    this.input = this.input.substring(0, startPos) + '}' + this.input.substring(endPos);
+                    this.setCaretPosition(startPos);
+                }
+
+                // '"'
+                if (event.keyCode === 51) {
+                    this.input = this.input.substring(0, startPos) + '"' + this.input.substring(endPos);
+                    this.setCaretPosition(startPos);
+                }
+            },
+            setCaretPosition(position) {
+                const textarea = document.getElementById('inputArea');
+                this.$nextTick(() => {
+                    textarea.focus();
+                    textarea.setSelectionRange(position, position);
+                });
             }
         },
         mounted() {
@@ -130,7 +161,7 @@
         },
         watch: {
             documentData: function (value) {
-                if(value != null){
+                if (value != null) {
                     this.input = JSON.stringify(value, null, 4);
                 }
             }
