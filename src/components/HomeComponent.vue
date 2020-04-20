@@ -105,7 +105,6 @@
     @import "~@govflanders/vl-ui-button/src/scss/button";
     @import "~@govflanders/vl-ui-input-field/src/scss/input-field";
     @import "~@govflanders/vl-ui-icon/src/scss/icon";
-    @import "~@govflanders/vl-ui-tooltip/src/scss/tooltip";
 
     .urlInput {
         width: 80%;
