@@ -10,8 +10,8 @@
                     <vl-column>
                         <p>Selecteer een OSLO applicatieprofiel waartegen je je data wil valideren</p>
                         <vl-select v-model="apChoice">
-                            <option v-for="ap in this.applicationProfiles" v-bind:key="ap" :value="ap.toLowerCase()">{{
-                                ap.replace('_', ' ') }}
+                            <option v-for="ap in this.applicationProfiles" v-bind:key="ap" :value="ap.toLowerCase().replace(' ', '_')">
+                                {{ ap }}
                             </option>
                         </vl-select>
                     </vl-column>
@@ -66,11 +66,12 @@
         data() {
             return {
                 input: '',
-                applicationProfiles: [
+                /*applicationProfiles: [
                     "Adresregister", "Besluit_publicatie", "Dienstencataloog", "Generiek_basis",
                     "Generieke_terugmeldfaciliteit", "Notificatie_basis", "Organisatie_basis", "Persoon_basis", "Subsidieregister",
                     "Contactvoorkeuren", "Dienst_transactiemodel", "Vlaamse_codex"
-                ],
+                ],*/
+                applicationProfiles: [],
                 formats: [
                     "text/turtle", "application/ld+json", "application/n-triples", "application/rdf+xml"
                 ],
@@ -153,6 +154,20 @@
         },
         mounted() {
             this.input = store.state.data;
+        },
+        beforeCreate() {
+            // Read config of the backend to get all application profiles
+            fetch(config.VALIDATOR_BACKEND_CONFIG)
+                .then(res => res.text())
+                .then(data => {
+                    const result = data.match(/validator.typeLabel.[a-zA-Z0-9 =_]*/g);
+                    let names = [];
+                    for(let ap of result){
+                        names.push(ap.replace(/validator.typeLabel.[a-zA-Z_]*( )?=( )?/, ""));
+                    }
+                    store.commit('setApplicationProfiles', names);
+                    this.applicationProfiles = store.getters.ApplicationProfiles;
+                })
         },
         beforeDestroy() {
             if (this.input !== store.state.data) {

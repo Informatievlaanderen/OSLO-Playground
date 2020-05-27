@@ -8,10 +8,14 @@ export default new Vuex.Store({
         data: '',
         quads: [],
         quadString: '',
+        applicationProfiles: []
     },
 
     getters: {
         // Here we will create a getter
+        ApplicationProfiles: state => {
+            return state.applicationProfiles
+        }
     },
 
     mutations: {
@@ -23,9 +27,9 @@ export default new Vuex.Store({
         },
         updateQuadString(state, string){
             state.quadString = string;
+        },
+        setApplicationProfiles(state, body){
+            state.applicationProfiles = body;
         }
     },
-
-    actions: {
-    }
 });
