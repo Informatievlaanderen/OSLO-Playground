@@ -37,7 +37,7 @@
                     </vl-column>
                     <vl-column width="5">
                         <vl-action-group>
-                            <vl-button mod-narrow @click="fetchDocument">
+                            <vl-button id="fetchButton" mod-narrow @click="fetchDocument">
                                 <vl-icon icon="cloud-download"/>
                             </vl-button>
                             <vl-input-field v-if="!fetchError" class="urlInput" v-model="documentURL"
