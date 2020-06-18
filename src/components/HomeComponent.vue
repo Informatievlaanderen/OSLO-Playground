@@ -29,8 +29,8 @@
                 <vl-grid mod-stacked>
                     <vl-column width="6">
                         <vl-action-group>
-                            <vl-button v-if="action === 'parsing'" mod-tertiary>JSON-LD parsing</vl-button>
-                            <vl-button @click="setAction('parsing')" v-else>JSON-LD Parsing</vl-button>
+                            <vl-button id="parseButtonActive" v-if="action === 'parsing'" mod-tertiary>JSON-LD parsing</vl-button>
+                            <vl-button id="parseButtonInactive" @click="setAction('parsing')" v-else>JSON-LD Parsing</vl-button>
                             <vl-button v-if="action === 'shacl'" mod-tertiary>SHACL validatie</vl-button>
                             <vl-button @click="setAction('shacl')" v-else>SHACL validatie</vl-button>
                         </vl-action-group>
@@ -63,6 +63,7 @@
 <script>
     import ParseComponent from "./ParseComponent";
     import ShaclComponent from "./ShaclComponent";
+    const fetch = require('node-fetch');
 
     export default {
         name: "HomeComponent",

@@ -53,6 +53,7 @@
 <script>
     import store from "../store/store";
     import ShaclResultComponent from "./ShaclResultComponent";
+    const fetch = require('node-fetch');
 
     const config = require('../../config');
     const Base64 = require('js-base64').Base64;

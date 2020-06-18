@@ -9,6 +9,9 @@
 </template>
 
 <script>
+
+    import { Response } from 'node-fetch';
+
     export default {
         name: "ShaclResultComponent",
         props: {
