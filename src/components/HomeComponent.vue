@@ -31,8 +31,8 @@
                         <vl-action-group>
                             <vl-button id="parseButtonActive" v-if="action === 'parsing'" mod-tertiary>JSON-LD parsing</vl-button>
                             <vl-button id="parseButtonInactive" @click="setAction('parsing')" v-else>JSON-LD Parsing</vl-button>
-                            <vl-button v-if="action === 'shacl'" mod-tertiary>SHACL validatie</vl-button>
-                            <vl-button @click="setAction('shacl')" v-else>SHACL validatie</vl-button>
+                            <vl-button id="shaclButtonActive" v-if="action === 'shacl'" mod-tertiary>SHACL validatie</vl-button>
+                            <vl-button id="shaclButtonInactive" @click="setAction('shacl')" v-else>SHACL validatie</vl-button>
                         </vl-action-group>
                     </vl-column>
                     <vl-column width="5">
