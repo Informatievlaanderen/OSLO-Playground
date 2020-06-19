@@ -40,9 +40,6 @@
                 quadString: '',
                 error: false,
                 errorMessage: '',
-                editorOptions: {
-                    'mode': 'code'
-                }
             }
         },
         methods: {
