@@ -63,9 +63,6 @@
 <script>
     import ParseComponent from "./ParseComponent";
     import ShaclComponent from "./ShaclComponent";
-    const fetch = require('node-fetch');
-
-
     export default {
         name: "HomeComponent",
         components: {ShaclComponent, ParseComponent},
@@ -81,18 +78,12 @@
             setAction(value) {
                 this.action = value;
             },
-            fetchDocument() {
+            async fetchDocument() {
                 const fetch = require('node-fetch');
                 if (this.documentURL != '') {
-                    fetch(this.documentURL)
-                        .then(result => result.json())
-                        .then(data => {
-                            this.documentData = data;
-                            this.fetchError = false;
-                        })
-                        .catch(() => {
-                            this.fetchError = true;
-                        });
+                    this.documentData = await new Promise(resolve => {
+                        fetch(this.documentURL).then(result => {this.fetchError = false; resolve(result.json())}).catch(() => this.fetchError = true)
+                    });
                 }
             }
         }
