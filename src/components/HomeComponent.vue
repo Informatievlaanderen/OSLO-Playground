@@ -30,14 +30,14 @@
                     <vl-column width="6">
                         <vl-action-group>
                             <vl-button id="parseButtonActive" v-if="action === 'parsing'" mod-tertiary>JSON-LD parsing</vl-button>
-                            <vl-button id="parseButtonInactive" @click="setAction('parsing')" v-else>JSON-LD Parsing</vl-button>
+                            <vl-button id="parseButtonInactive" @click.native="setAction('parsing')" v-else>JSON-LD Parsing</vl-button>
                             <vl-button id="shaclButtonActive" v-if="action === 'shacl'" mod-tertiary>SHACL validatie</vl-button>
-                            <vl-button id="shaclButtonInactive" @click="setAction('shacl')" v-else>SHACL validatie</vl-button>
+                            <vl-button id="shaclButtonInactive" @click.native="setAction('shacl')" v-else>SHACL validatie</vl-button>
                         </vl-action-group>
                     </vl-column>
                     <vl-column width="5">
                         <vl-action-group>
-                            <vl-button id="fetchButton" mod-narrow @click="fetchDocument">
+                            <vl-button id="fetchButton" mod-narrow @click.native="fetchDocument">
                                 <vl-icon icon="cloud-download"/>
                             </vl-button>
                             <vl-input-field v-if="!fetchError" class="urlInput" v-model="documentURL"
@@ -64,6 +64,7 @@
     import ParseComponent from "./ParseComponent";
     import ShaclComponent from "./ShaclComponent";
     const fetch = require('node-fetch');
+
 
     export default {
         name: "HomeComponent",
