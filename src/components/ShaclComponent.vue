@@ -67,11 +67,6 @@
         data() {
             return {
                 input: '',
-                /*applicationProfiles: [
-                    "Adresregister", "Besluit_publicatie", "Dienstencataloog", "Generiek_basis",
-                    "Generieke_terugmeldfaciliteit", "Notificatie_basis", "Organisatie_basis", "Persoon_basis", "Subsidieregister",
-                    "Contactvoorkeuren", "Dienst_transactiemodel", "Vlaamse_codex"
-                ],*/
                 applicationProfiles: [],
                 formats: [
                     "text/turtle", "application/ld+json", "application/n-triples", "application/rdf+xml"
