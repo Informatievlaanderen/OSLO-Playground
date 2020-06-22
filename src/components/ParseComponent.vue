@@ -7,7 +7,7 @@
                              rows="16"></vl-textarea>
             </vl-column>
             <vl-column>
-                <vl-button @click="parse">Parse</vl-button>
+                <vl-button id="parseButton" @click.native="parse">Parse</vl-button>
             </vl-column>
         </vl-grid>
         <vl-region>
