@@ -8,7 +8,8 @@ const wrapper = shallowMount(ParseResultComponent, {
        'vl-column',
        'vl-tabs',
        'vl-tab',
-       'vl-data-table'
+       'vl-data-table',
+       'vl-textarea'
    ]
 });
 

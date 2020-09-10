@@ -1,6 +1,9 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils';
+import '@testing-library/jest-dom';
 import HomeComponent from "../src/components/HomeComponent.vue";
-import { describe, expect} from "@jest/globals";
+import ParseComponent from "../src/components/ParseComponent";
+import ShaclComponent from "../src/components/ShaclComponent";
+import { describe, expect, test} from "@jest/globals";
 
 const wrapper = shallowMount(HomeComponent, {
     stubs: [
@@ -31,7 +34,6 @@ describe('HomeComponent', () => {
        expect(defaultData.documentData).toBe(null);
     });
 
-    // Inspect the component instance on mount
     test('it sets the data fields correctly when created', () => {
         expect(wrapper.vm.$data.action).toBe('parsing');
         expect(wrapper.vm.$data.documentURL).toBe('');
@@ -43,20 +45,35 @@ describe('HomeComponent', () => {
         // Default value is parsing
         const shaclButton = wrapper.find('#shaclButtonInactive');
         await shaclButton.trigger('click');
-        expect(wrapper.vm.$data.action).toBe('shacl');
+        expect(wrapper.vm.$data.action).toMatch('shacl');
 
         // Go back to default value
         const parseButton = wrapper.find('#parseButtonInactive');
         await parseButton.trigger('click');
-        expect(wrapper.vm.$data.action).toBe('parsing');
+        expect(wrapper.vm.$data.action).toMatch('parsing');
 
     });
 
     test('it should fetch URLs containing JSON(-LD) data', async () => {
-        //TODO
+        const spy = jest.spyOn(wrapper.vm, 'fetchDocument');
+        const button = wrapper.find('#fetchButton');
+        await button.trigger('click');
+        expect(spy).toHaveBeenCalled();
     });
 
-    test('it should throw an error when fetching a URL that does not contain JSON', () => {
-        //TODO
+    test('it should show an error when an error occured while fetching data from the URL', async () => {
+        expect(wrapper.find('p').exists()).toBeFalsy();
+        await wrapper.setData({fetchError: true});
+        expect(wrapper.find('p').exists()).toBeTruthy();
     });
+
+    test('it should show the ParseComponent when action is "parsing"', async ( ) => {
+       await wrapper.setData({action : 'parsing'});
+       expect(wrapper.findComponent(ParseComponent).exists()).toBeTruthy();
+    });
+
+    test('it should show the ShaclComponent when action is "shacl"', async () => {
+        await wrapper.setData({action: 'shacl'});
+        expect(wrapper.findComponent(ShaclComponent).exists()).toBeTruthy();
+    })
 })

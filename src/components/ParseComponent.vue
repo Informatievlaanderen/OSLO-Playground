@@ -13,7 +13,7 @@
         <vl-region>
             <vl-grid v-if="error">
                 <vl-column width="11">
-                    <vl-alert icon=""
+                    <vl-alert id="parseError" icon=""
                               mod-error
                               :title="'Error - ' + errorMessage"/>
                 </vl-column>
@@ -143,9 +143,5 @@
     .vl-alert {
         color: darkred;
     }
-
-    /*.jsoneditor-poweredBy {
-        display: none;
-    }*/
 
 </style>

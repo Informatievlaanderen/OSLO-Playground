@@ -1,6 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import ParseComponent from "../src/components/ParseComponent";
 import { describe, expect} from "@jest/globals";
+import ParseResultComponent from "../src/components/ParseResultComponent";
 
 const data = {
     "@context": {
@@ -31,6 +32,8 @@ const wrapper = shallowMount(ParseComponent, {
 });
 
 describe('ParseComponent', function () {
+    //TODO: add more tests
+
     test('it sets the correct default data', () => {
         expect(typeof ParseComponent.data).toBe('function');
         const defaultData = ParseComponent.data();
@@ -50,13 +53,26 @@ describe('ParseComponent', function () {
         expect(wrapper.vm.$data.errorMessage).toBe('');
     });
 
-    test('it should parse the data from the input field', () => {
-        //TODO
+    // Not working
+    /*test('tab function is executed when tab button is pressed', async () => {
+        const spy = jest.spyOn(wrapper.vm, 'tab');
+        await wrapper.trigger('keydown.tab');
+        expect(spy).toHaveBeenCalled();
+    });*/
+
+    test('it shows an error when something went wrong while parsing the data', async () => {
+            expect(wrapper.find('#parseError').exists()).toBeFalsy();
+            await wrapper.setData({error: true});
+            expect(wrapper.find('#parseError').exists()).toBeTruthy();
     });
 
-    test('it throws an error when input can\'t be parsed', () => {
-        //TODO
-    });
+    test('ParseResultComponent is present', async () => {
+        expect(wrapper.findComponent(ParseResultComponent).exists()).toBeTruthy();
+    })
 
-    //TODO: add tests for tab, caret position, ...
+    test('Parse function is executed when parse button is clicked', async () => {
+        const spy = jest.spyOn(wrapper.vm, 'parse');
+        await wrapper.find('#parseButton').trigger('click');
+        expect(spy).toHaveBeenCalled();
+    });
 });

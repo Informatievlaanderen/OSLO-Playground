@@ -53,7 +53,6 @@
                     <vl-column v-if="action === 'shacl'">
                         <ShaclComponent v-bind:documentData="documentData"/>
                     </vl-column>
-
                 </vl-grid>
             </vl-layout>
         </vl-region>
