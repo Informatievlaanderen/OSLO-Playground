@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import ParseResultComponent from "../src/components/ParseResultComponent";
+import ParseResultComponent from "../src/views/ParseResult";
 import {describe, expect} from "@jest/globals";
 
 const wrapper = shallowMount(ParseResultComponent, {

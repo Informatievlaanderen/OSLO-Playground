@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
-import ParseComponent from "../src/components/ParseComponent";
+import ParseComponent from "../src/views/Parse";
 import { describe, expect} from "@jest/globals";
-import ParseResultComponent from "../src/components/ParseResultComponent";
+import ParseResultComponent from "../src/views/ParseResult";
 
 const data = {
     "@context": {

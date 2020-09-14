@@ -52,7 +52,7 @@
 
 <script>
     import store from "../store/store";
-    import ShaclResultComponent from "./ShaclResultComponent";
+    import ShaclResultComponent from "./ShaclResult";
     const fetch = require('node-fetch');
 
     const config = require('../../config');

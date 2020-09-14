@@ -1,8 +1,8 @@
 import { shallowMount } from '@vue/test-utils';
 import '@testing-library/jest-dom';
-import HomeComponent from "../src/components/HomeComponent.vue";
-import ParseComponent from "../src/components/ParseComponent";
-import ShaclComponent from "../src/components/ShaclComponent";
+import HomeComponent from "../src/views/Home.vue";
+import ParseComponent from "../src/views/Parse";
+import ShaclComponent from "../src/views/Shacl";
 import { describe, expect, test} from "@jest/globals";
 
 const wrapper = shallowMount(HomeComponent, {

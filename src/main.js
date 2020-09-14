@@ -27,7 +27,7 @@ import {
   VlDataTable,
   VlActionGroup,
   VlInputField,
-  VlIcon
+  VlIcon,
 } from'@govflanders/vl-ui-vue-components';
 
 Vue.component('vl-region', VlRegion);

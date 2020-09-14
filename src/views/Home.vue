@@ -60,8 +60,8 @@
 </template>
 
 <script>
-    import ParseComponent from "./ParseComponent";
-    import ShaclComponent from "./ShaclComponent";
+    import ParseComponent from "./Parse";
+    import ShaclComponent from "./Shacl";
     export default {
         name: "HomeComponent",
         components: {ShaclComponent, ParseComponent},

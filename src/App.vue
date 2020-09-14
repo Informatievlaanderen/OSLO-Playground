@@ -6,7 +6,7 @@
 
 <script>
     /* eslint-disable import/prefer-default-export */
-    import HomeComponent from "./components/HomeComponent";
+    import HomeComponent from "./views/Home";
 
     export default {
         name: 'app',

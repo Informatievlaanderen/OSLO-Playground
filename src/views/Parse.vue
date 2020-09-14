@@ -18,14 +18,14 @@
                               :title="'Error - ' + errorMessage"/>
                 </vl-column>
             </vl-grid>
-            <ParseResultComponent v-bind:quads="quads" v-bind:quadString="quadString"/>
+            <ParseResultComponent v-if="parsed && !error" v-bind:quads="quads" v-bind:quadString="quadString"/>
         </vl-region>
     </div>
 </template>
 
 <script>
     import store from "../store/store";
-    import ParseResultComponent from "./ParseResultComponent";
+    import ParseResultComponent from "./ParseResult";
 
     export default {
         name: "ParseComponent",
@@ -40,12 +40,15 @@
                 quadString: '',
                 error: false,
                 errorMessage: '',
+                parsed: false
             }
         },
         methods: {
             async parse() {
                 this.quads = [];
                 this.quadString = '';
+
+                this.parsed = true;
 
                 // Update store with latest version of the input
                 if (this.input !== store.state.data) {
