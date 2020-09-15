@@ -27,7 +27,7 @@
         <vl-region>
             <vl-layout>
                 <vl-grid mod-stacked>
-                    <vl-column width="6">
+                    <vl-column width="5">
                         <vl-action-group>
                             <vl-button id="parseButtonActive" v-if="action === 'parsing'" mod-tertiary>JSON-LD parsing</vl-button>
                             <vl-button id="parseButtonInactive" @click.native="setAction('parsing')" v-else>JSON-LD Parsing</vl-button>
@@ -35,15 +35,13 @@
                             <vl-button id="shaclButtonInactive" @click.native="setAction('shacl')" v-else>SHACL validatie</vl-button>
                         </vl-action-group>
                     </vl-column>
-                    <vl-column width="5">
+                    <vl-column width="6">
                         <vl-action-group>
                             <vl-button id="fetchButton" mod-narrow @click.native="fetchDocument">
                                 <vl-icon icon="cloud-download"/>
                             </vl-button>
-                            <vl-input-field v-if="!fetchError" class="urlInput" v-model="documentURL"
+                            <vl-input-field v-model="documentURL" style="width: 91%;" v-bind:class="{'vl-input-field--error': fetchError}"
                                             placeholder="JSON-LD document URL"/>
-                            <vl-input-field v-else  class="urlInput" v-model="documentURL"
-                                             placeholder="JSON-LD document URL" mod-error/>
                             <p v-if="fetchError" style="color: red;">Fout bij het ophalen van de URL</p>
                         </vl-action-group>
                     </vl-column>
@@ -98,7 +96,4 @@
     @import "~@govflanders/vl-ui-input-field/src/scss/input-field";
     @import "~@govflanders/vl-ui-icon/src/scss/icon";
 
-    .urlInput {
-        width: 80%;
-    }
 </style>

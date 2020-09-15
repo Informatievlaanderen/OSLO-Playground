@@ -4,6 +4,8 @@
             <vl-action-group>
                 <vl-button v-bind:class="{'vl-button--secondary': selected === 'quads'}" @click="setView('quads')">N-Quads</vl-button>
                 <vl-button v-bind:class="{'vl-button--secondary': selected === 'table'}" @click="setView('table')">Tabel</vl-button>
+                <vl-button v-bind:class="{'vl-button--secondary': selected === 'table'}" @click="setView('table')">Expanded</vl-button>
+                <vl-button v-bind:class="{'vl-button--secondary': selected === 'table'}" @click="setView('table')">Tabel</vl-button>
             </vl-action-group>
         </vl-column>
         <vl-column v-if="selected === 'quads'" width="11">

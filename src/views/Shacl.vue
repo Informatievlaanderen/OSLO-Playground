@@ -9,7 +9,7 @@
                 <vl-grid mod-stacked>
                     <vl-column>
                         <p>Selecteer een OSLO applicatieprofiel waartegen je je data wil valideren</p>
-                        <vl-select v-model="apChoice">
+                        <vl-select placeholder-text="Selecteer een applicatieprofiel" v-model="apChoice">
                             <option v-for="ap in this.applicationProfiles" v-bind:key="ap" :value="ap.toLowerCase().replace(' ', '_')">
                                 {{ ap }}
                             </option>
@@ -17,7 +17,7 @@
                     </vl-column>
                     <vl-column>
                         <p>Selecteer het gewenste output-formaat</p>
-                        <vl-select v-model="formatChoice">
+                        <vl-select placeholder-text="Selecteer een formaat" v-model="formatChoice">
                             <option v-for="format in formats" v-bind:key="format" :value="format">
                                 {{ format }}
                             </option>
@@ -35,7 +35,7 @@
                 <vl-column width="11">
                     <vl-alert icon=""
                               mod-error
-                              :title="'Gelieve een applicatieprofiel én outputformaat te kiezen.'"/>
+                              :title="'Gelieve een applicatieprofiel en/of outputformaat te kiezen.'"/>
                 </vl-column>
             </vl-grid>
             <vl-grid v-if="fetchError">
@@ -81,6 +81,9 @@
         },
         methods: {
             validate() {
+                if(this.input === ''){
+                    return;
+                }
 
                 // Update store with latest version of the input (in case it has changed)
                 if (this.input !== store.state.data) {
