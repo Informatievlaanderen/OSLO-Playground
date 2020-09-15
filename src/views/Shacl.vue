@@ -31,7 +31,7 @@
         </vl-grid>
 
         <vl-region>
-            <vl-grid v-if="showError && (formatChoice === '' || apChoice === null)">
+            <vl-grid v-if="optionError && (formatChoice === '' || apChoice === null)">
                 <vl-column width="11">
                     <vl-alert icon=""
                               mod-error
@@ -74,7 +74,7 @@
                 apChoice: null,
                 formatChoice: "text/turtle",
                 result: null,
-                showError: false,
+                optionError: false,
                 fetchError: false,
                 fetchErrorMessage: ""
             }
@@ -91,7 +91,7 @@
                 }
 
                 if (this.apChoice && this.formatChoice) {
-                    this.showError = false;
+                    this.optionError = false;
 
                     const body = JSON.stringify({
                         contentToValidate: Base64.encode(this.input),
@@ -118,7 +118,7 @@
                     });
                 } else {
                     // Show message that an AP and format must be chosen
-                    this.showError = true;
+                    this.optionError = true;
                 }
             },
             tab(event) {
