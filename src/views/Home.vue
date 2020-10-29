@@ -38,7 +38,7 @@
                     <vl-column width="6">
                         <vl-action-group>
                             <vl-button id="fetchButton" mod-narrow @click.native="fetchDocument">
-                                <vl-icon icon="cloud-download"/>
+                                <vl-icon icon="arrow-down"/>
                             </vl-button>
                             <vl-input-field v-model="documentURL" style="width: 91%;" v-bind:class="{'vl-input-field--error': fetchError}"
                                             placeholder="JSON-LD document URL"/>
