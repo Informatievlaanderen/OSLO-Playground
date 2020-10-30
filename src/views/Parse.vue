@@ -18,7 +18,10 @@
                               :title="'Error - ' + errorMessage"/>
                 </vl-column>
             </vl-grid>
-            <ParseResultComponent v-if="parsed && !error" v-bind:quads="quads" v-bind:quadString="quadString"/>
+            <ParseResultComponent v-if="parsed && !error"
+                                  v-bind:quads="quads"
+                                  v-bind:quadString="quadString"
+                                  v-bind:expanded="expanded"/>
         </vl-region>
     </div>
 </template>
@@ -38,6 +41,7 @@
                 input: '',
                 quads: [],
                 quadString: '',
+                expanded: '',
                 error: false,
                 errorMessage: '',
                 parsed: false
@@ -77,6 +81,8 @@
                         .on('end', () => {
                         });
 
+                    // String of expanded version (context removed)
+                    this.expanded = JSON.stringify(await jsonld.expand(JSON.parse(this.input)), null, 4);
 
                 } catch (e) {
                     this.error = true;

@@ -4,6 +4,7 @@
             <vl-action-group>
                 <vl-button v-bind:class="{'vl-button--secondary': selected === 'quads'}" @click="setView('quads')">N-Quads</vl-button>
                 <vl-button v-bind:class="{'vl-button--secondary': selected === 'table'}" @click="setView('table')">Tabel</vl-button>
+                <vl-button v-bind:class="{'vl-button--secondary': selected === 'expanded'}" @click="setView('expanded')">Expanded</vl-button>
             </vl-action-group>
         </vl-column>
         <vl-column v-if="selected === 'quads'" width="11">
@@ -12,19 +13,24 @@
         <vl-column v-if="selected === 'table'" width="11">
             <TableComponent v-bind:quads="quads"/>
         </vl-column>
+        <vl-column v-if="selected === 'expanded'" width="11">
+            <ExpandedComponent v-bind:expanded="expanded"/>
+        </vl-column>
     </vl-grid>
 </template>
 
 <script>
     import QuadComponent from "../components/QuadComponent";
     import TableComponent from "../components/TableComponent";
+    import ExpandedComponent from "../components/ExpandedComponent";
 
     export default {
         name: "ParseResultComponent",
-        components: {TableComponent, QuadComponent},
+        components: {ExpandedComponent, TableComponent, QuadComponent},
         props: {
             quads: Array,
-            quadString: String
+            quadString: String,
+            expanded: String
         },
         data() {
             return {
