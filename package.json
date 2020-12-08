@@ -6,7 +6,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "jest": {
     "moduleFileExtensions": [
