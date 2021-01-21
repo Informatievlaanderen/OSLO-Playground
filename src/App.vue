@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <HomeComponent/>
+        <router-view/>
     </div>
 </template>
 
