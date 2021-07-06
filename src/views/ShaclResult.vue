@@ -1,11 +1,15 @@
 <template>
-    <div>
-        <vl-grid>
-            <vl-column width="11">
-                <vl-textarea rows="16" v-model="output" mod-disabled></vl-textarea>
-            </vl-column>
-        </vl-grid>
-    </div>
+  <div>
+    <vl-grid>
+      <vl-column width="11">
+        <vl-textarea
+          v-model="output"
+          rows="16"
+          mod-disabled
+        />
+      </vl-column>
+    </vl-grid>
+  </div>
 </template>
 
 <script>

@@ -1,14 +1,24 @@
 <template>
-    <vl-textarea v-model="expanded" rows="16" mod-disabled></vl-textarea>
+  <vl-textarea
+    v-model="expandedFormat"
+    rows="16"
+    mod-disabled
+  />
 </template>
 
 <script>
-    export default {
-        name: "ExpandedComponent",
-        props: {
-            expanded: String
+export default {
+    name: "ExpandedComponent",
+    props: {
+        expanded: {
+          type: String,
+          default: ""
         }
+    },
+    data(){
+      expandedFormat: expanded
     }
+}
 </script>
 
 <style lang="scss">

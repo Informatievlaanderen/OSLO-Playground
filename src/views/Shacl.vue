@@ -1,53 +1,78 @@
 <template>
-    <div>
-        <vl-grid>
-            <vl-column width="7">
-                <vl-textarea id="inputArea" @keydown.tab.prevent="tab($event)" @keyup="format($event)" v-model="input"
-                             rows="16"></vl-textarea>
-            </vl-column>
-            <vl-column width="4">
-                <vl-grid mod-stacked>
-                    <vl-column>
-                        <p>Selecteer een OSLO applicatieprofiel waartegen je je data wil valideren</p>
-                        <vl-select placeholder-text="Selecteer een applicatieprofiel" v-model="apChoice">
-                            <option v-for="ap in this.applicationProfiles" v-bind:key="ap" :value="ap.toLowerCase().replace(' ', '_')">
-                                {{ ap }}
-                            </option>
-                        </vl-select>
-                    </vl-column>
-                    <vl-column>
-                        <p>Selecteer het gewenste output-formaat</p>
-                        <vl-select placeholder-text="Selecteer een formaat" v-model="formatChoice">
-                            <option v-for="format in formats" v-bind:key="format" :value="format">
-                                {{ format }}
-                            </option>
-                        </vl-select>
-                    </vl-column>
-                    <vl-column>
-                        <vl-button @click="validate">Valideer</vl-button>
-                    </vl-column>
-                </vl-grid>
-            </vl-column>
+  <div>
+    <vl-grid>
+      <vl-column width="7">
+        <vl-textarea
+          id="inputArea"
+          v-model="input"
+          rows="16"
+          @keydown.tab.prevent="tab($event)"
+          @keyup="format($event)"
+        />
+      </vl-column>
+      <vl-column width="4">
+        <vl-grid mod-stacked>
+          <vl-column>
+            <p>Selecteer een OSLO applicatieprofiel waartegen je je data wil valideren</p>
+            <vl-select
+              v-model="apChoice"
+              placeholder-text="Selecteer een applicatieprofiel"
+            >
+              <option
+                v-for="ap in applicationProfiles"
+                :key="ap"
+                :value="ap.toLowerCase().replace(' ', '_')"
+              >
+                {{ ap }}
+              </option>
+            </vl-select>
+          </vl-column>
+          <vl-column>
+            <p>Selecteer het gewenste output-formaat</p>
+            <vl-select
+              v-model="formatChoice"
+              placeholder-text="Selecteer een formaat"
+            >
+              <option
+                v-for="output in formats"
+                :key="output"
+                :value="output"
+              >
+                {{ output }}
+              </option>
+            </vl-select>
+          </vl-column>
+          <vl-column>
+            <vl-button @click="validate">
+              Valideer
+            </vl-button>
+          </vl-column>
         </vl-grid>
+      </vl-column>
+    </vl-grid>
 
-        <vl-region>
-            <vl-grid v-if="optionError && (formatChoice === '' || apChoice === null)">
-                <vl-column width="11">
-                    <vl-alert icon=""
-                              mod-error
-                              :title="'Gelieve een applicatieprofiel en/of outputformaat te kiezen.'"/>
-                </vl-column>
-            </vl-grid>
-            <vl-grid v-if="fetchError">
-                <vl-column width="11">
-                    <vl-alert icon=""
-                              mod-error
-                              :title="'Error - ' + fetchErrorMessage"/>
-                </vl-column>
-            </vl-grid>
-            <ShaclResultComponent v-bind:result="result"/>
-        </vl-region>
-    </div>
+    <vl-region>
+      <vl-grid v-if="optionError && (formatChoice === '' || apChoice === null)">
+        <vl-column width="11">
+          <vl-alert
+            icon=""
+            mod-error
+            :title="'Gelieve een applicatieprofiel en/of outputformaat te kiezen.'"
+          />
+        </vl-column>
+      </vl-grid>
+      <vl-grid v-if="fetchError">
+        <vl-column width="11">
+          <vl-alert
+            icon=""
+            mod-error
+            :title="'Error - ' + fetchErrorMessage"
+          />
+        </vl-column>
+      </vl-grid>
+      <ShaclResultComponent :result="result" />
+    </vl-region>
+  </div>
 </template>
 
 <script>
@@ -62,7 +87,10 @@
         name: "ShaclComponent",
         components: {ShaclResultComponent},
         props: {
-            documentData: Object
+            documentData: {
+              type: Object,
+              default: null
+            }
         },
         data() {
             return {
@@ -77,6 +105,35 @@
                 optionError: false,
                 fetchError: false,
                 fetchErrorMessage: ""
+            }
+        },
+        watch: {
+            documentData: function (value) {
+                if (value != null) {
+                    this.input = JSON.stringify(value, null, 4);
+                }
+            }
+        },
+        mounted() {
+            this.input = store.state.data;
+        },
+        beforeCreate() {
+            // Read config of the backend to get all application profiles
+            fetch(config.VALIDATOR_BACKEND_CONFIG)
+                .then(res => res.text())
+                .then(data => {
+                    const result = data.match(/validator.typeLabel.[a-zA-Z0-9 =_]*/g);
+                    let names = [];
+                    for(let ap of result){
+                        names.push(ap.replace(/validator.typeLabel.[a-zA-Z_]*( )?=( )?/, ""));
+                    }
+                    store.commit('setApplicationProfiles', names);
+                    this.applicationProfiles = store.getters.ApplicationProfiles;
+                })
+        },
+        beforeUnmount() {
+            if (this.input !== store.state.data) {
+                store.commit('updateData', this.input);
             }
         },
         methods: {
@@ -149,35 +206,6 @@
                     textarea.focus();
                     textarea.setSelectionRange(position, position);
                 });
-            }
-        },
-        mounted() {
-            this.input = store.state.data;
-        },
-        beforeCreate() {
-            // Read config of the backend to get all application profiles
-            fetch(config.VALIDATOR_BACKEND_CONFIG)
-                .then(res => res.text())
-                .then(data => {
-                    const result = data.match(/validator.typeLabel.[a-zA-Z0-9 =_]*/g);
-                    let names = [];
-                    for(let ap of result){
-                        names.push(ap.replace(/validator.typeLabel.[a-zA-Z_]*( )?=( )?/, ""));
-                    }
-                    store.commit('setApplicationProfiles', names);
-                    this.applicationProfiles = store.getters.ApplicationProfiles;
-                })
-        },
-        beforeDestroy() {
-            if (this.input !== store.state.data) {
-                store.commit('updateData', this.input);
-            }
-        },
-        watch: {
-            documentData: function (value) {
-                if (value != null) {
-                    this.input = JSON.stringify(value, null, 4);
-                }
             }
         }
     }

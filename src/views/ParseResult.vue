@@ -1,22 +1,46 @@
 <template>
-    <vl-grid mod-stacked>
-        <vl-column>
-            <vl-action-group>
-                <vl-button v-bind:class="{'vl-button--secondary': selected === 'quads'}" @click="setView('quads')">N-Quads</vl-button>
-                <vl-button v-bind:class="{'vl-button--secondary': selected === 'table'}" @click="setView('table')">Tabel</vl-button>
-                <vl-button v-bind:class="{'vl-button--secondary': selected === 'expanded'}" @click="setView('expanded')">Expanded</vl-button>
-            </vl-action-group>
-        </vl-column>
-        <vl-column v-if="selected === 'quads'" width="11">
-            <QuadComponent v-bind:quadString="quadString"/>
-        </vl-column>
-        <vl-column v-if="selected === 'table'" width="11">
-            <TableComponent v-bind:quads="quads"/>
-        </vl-column>
-        <vl-column v-if="selected === 'expanded'" width="11">
-            <ExpandedComponent v-bind:expanded="expanded"/>
-        </vl-column>
-    </vl-grid>
+  <vl-grid mod-stacked>
+    <vl-column>
+      <vl-action-group>
+        <vl-button
+          :class="{'vl-button--secondary': selected === 'quads'}"
+          @click="setView('quads')"
+        >
+          N-Quads
+        </vl-button>
+        <vl-button
+          :class="{'vl-button--secondary': selected === 'table'}"
+          @click="setView('table')"
+        >
+          Tabel
+        </vl-button>
+        <vl-button
+          :class="{'vl-button--secondary': selected === 'expanded'}"
+          @click="setView('expanded')"
+        >
+          Expanded
+        </vl-button>
+      </vl-action-group>
+    </vl-column>
+    <vl-column
+      v-if="selected === 'quads'"
+      width="11"
+    >
+      <QuadComponent :quad-string="quadString" />
+    </vl-column>
+    <vl-column
+      v-if="selected === 'table'"
+      width="11"
+    >
+      <TableComponent :quads="quads" />
+    </vl-column>
+    <vl-column
+      v-if="selected === 'expanded'"
+      width="11"
+    >
+      <ExpandedComponent :expanded="expanded" />
+    </vl-column>
+  </vl-grid>
 </template>
 
 <script>
@@ -28,9 +52,18 @@
         name: "ParseResultComponent",
         components: {ExpandedComponent, TableComponent, QuadComponent},
         props: {
-            quads: Array,
-            quadString: String,
-            expanded: String
+            quads: {
+              type: Array,
+              default: null
+            },
+            quadString: {
+              type: String,
+              default: ""
+            },
+            expanded: {
+              type: String,
+              default: ""
+            }
         },
         data() {
             return {
