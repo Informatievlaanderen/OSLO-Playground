@@ -1,8 +1,8 @@
-# OSLO Playground
+# OSLO Playground - Dev Branch
 
 ![Build status](https://github.com/informatievlaanderen/OSLO-Playground/actions/workflows/ci.yml/badge.svg)
 
-Deze repository bevat de inhoud van de OSLO Playground ontwikkeld door het OSLO-team. 
+Deze repository bevat de inhoud van de OSLO Playground ontwikkeld door het OSLO-team. Het is de bedoeling om nieuwe features eerst op deze branch te implementeren en vervolgens lokaal te testen. Indien nodig kan deze branch gedeployed wordt op de dev-omgeving.
 
 ## Gebruik
 
