@@ -1,5 +1,7 @@
 # OSLO Playground
 
+![Build status](https://github.com/informatievlaanderen/OSLO-Playground/actions/workflows/ci.yml/badge.svg)
+
 Deze repository bevat de inhoud van de OSLO Playground ontwikkeld door het OSLO-team. 
 
 ## Gebruik
