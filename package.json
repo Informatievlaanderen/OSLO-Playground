@@ -48,7 +48,7 @@
     "@govflanders/vl-ui-tabs": "3.12.30",
     "@govflanders/vl-ui-textarea": "3.12.30",
     "@govflanders/vl-ui-titles": "3.12.30",
-    "@govflanders/vl-ui-upload": "3.12.9",
+    "@govflanders/vl-ui-upload": "3.12.30",
     "@govflanders/vl-ui-vue-components": "3.11.0",
     "@jest/globals": "26.6.2",
     "@testing-library/jest-dom": "5.11.9",
