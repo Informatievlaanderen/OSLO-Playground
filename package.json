@@ -64,16 +64,16 @@
     "sass": "1.35.2",
     "stream": "0.0.2",
     "streamify-string": "1.0.1",
-    "vue": "2.6.12",
-    "vue-router": "3.5.1",
+    "vue": "2.6.14",
+    "vue-router": "3.5.2",
     "vuex": "3.6.2",
     "xml-formatter": "1.2.1",
     "xml2js": "0.4.23"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "4.5.11",
-    "@vue/cli-service": "4.5.11",
-    "@vue/test-utils": "1.1.2",
+    "@vue/cli-plugin-babel": "4.5.13",
+    "@vue/cli-service": "4.5.13",
+    "@vue/test-utils": "1.2.1",
     "babel-core": "7.0.0-bridge.0",
     "eslint": "7.30.0",
     "eslint-plugin-vue": "7.13.0",
@@ -83,6 +83,6 @@
     "jest": "26.6.3",
     "sass-loader": "^10.2.0",
     "vue-jest": "3.0.7",
-    "vue-template-compiler": "2.6.12"
+    "vue-template-compiler": "2.6.14"
   }
 }
