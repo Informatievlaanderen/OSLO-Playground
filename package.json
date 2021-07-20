@@ -51,7 +51,7 @@
     "@govflanders/vl-ui-upload": "3.12.30",
     "@govflanders/vl-ui-vue-components": "3.11.0",
     "@jest/globals": "26.6.2",
-    "@testing-library/jest-dom": "5.11.9",
+    "@testing-library/jest-dom": "5.14.1",
     "core-js": "3.8.3",
     "js-base64": "2.6.4",
     "jsonld": "2.0.2",
