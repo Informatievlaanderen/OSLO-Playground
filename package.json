@@ -47,7 +47,7 @@
     "@govflanders/vl-ui-side-navigation": "3.12.31",
     "@govflanders/vl-ui-tabs": "3.12.32",
     "@govflanders/vl-ui-textarea": "3.12.32",
-    "@govflanders/vl-ui-titles": "3.12.30",
+    "@govflanders/vl-ui-titles": "3.12.32",
     "@govflanders/vl-ui-upload": "3.12.30",
     "@govflanders/vl-ui-vue-components": "3.11.0",
     "@jest/globals": "26.6.2",
