@@ -35,7 +35,7 @@
     "@babel/polyfill": "7.12.1",
     "@govflanders/vl-ui-action-group": "3.12.33",
     "@govflanders/vl-ui-alert": "3.12.33",
-    "@govflanders/vl-ui-button": "3.12.33",
+    "@govflanders/vl-ui-button": "4.0.0",
     "@govflanders/vl-ui-content-header": "3.12.33",
     "@govflanders/vl-ui-core": "4.1.33",
     "@govflanders/vl-ui-data-table": "3.12.33",
