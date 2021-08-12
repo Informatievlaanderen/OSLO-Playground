@@ -54,7 +54,7 @@
     "@testing-library/jest-dom": "5.14.1",
     "core-js": "3.16.1",
     "js-base64": "2.6.4",
-    "jsonld": "2.0.2",
+    "jsonld": "5.2.0",
     "jsonld-streaming-parser": "1.1.2",
     "n3": "1.11.1",
     "node-fetch": "2.6.1",
