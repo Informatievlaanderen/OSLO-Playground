@@ -59,7 +59,7 @@
     "n3": "1.11.1",
     "node-fetch": "2.6.1",
     "popper.js": "1.16.1",
-    "rdf-parse": "1.8.1",
+    "rdf-parse": "1.9.1",
     "rdfxml-streaming-parser": "1.5.0",
     "sass": "1.38.0",
     "stream": "0.0.2",
