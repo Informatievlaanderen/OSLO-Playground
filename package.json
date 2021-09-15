@@ -52,7 +52,7 @@
     "@govflanders/vl-ui-vue-components": "3.11.0",
     "@jest/globals": "26.6.2",
     "@testing-library/jest-dom": "5.14.1",
-    "core-js": "3.16.4",
+    "core-js": "3.17.3",
     "js-base64": "2.6.4",
     "jsonld": "2.0.2",
     "jsonld-streaming-parser": "1.1.2",
