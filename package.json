@@ -33,7 +33,7 @@
   "dependencies": {
     "@babel/plugin-transform-runtime": "7.15.8",
     "@babel/polyfill": "7.12.1",
-    "@govflanders/vl-ui-action-group": "3.12.33",
+    "@govflanders/vl-ui-action-group": "9.0.10",
     "@govflanders/vl-ui-alert": "3.12.33",
     "@govflanders/vl-ui-button": "3.12.33",
     "@govflanders/vl-ui-content-header": "3.12.33",
