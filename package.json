@@ -73,7 +73,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "4.5.19",
     "@vue/cli-service": "4.5.19",
-    "@vue/test-utils": "2.3.2",
+    "@vue/test-utils": "2.4.1",
     "babel-core": "7.0.0-bridge.0",
     "eslint": "8.37.0",
     "eslint-plugin-vue": "9.10.0",
