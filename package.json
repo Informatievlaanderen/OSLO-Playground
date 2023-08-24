@@ -50,7 +50,7 @@
     "@govflanders/vl-ui-titles": "3.12.33",
     "@govflanders/vl-ui-upload": "3.12.33",
     "@govflanders/vl-ui-vue-components": "3.11.0",
-    "@jest/globals": "26.6.2",
+    "@jest/globals": "29.6.4",
     "@testing-library/jest-dom": "5.17.0",
     "core-js": "3.32.1",
     "js-base64": "2.6.4",
