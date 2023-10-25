@@ -75,7 +75,7 @@
     "@vue/cli-service": "4.5.19",
     "@vue/test-utils": "2.4.1",
     "babel-core": "7.0.0-bridge.0",
-    "eslint": "8.47.0",
+    "eslint": "8.52.0",
     "eslint-plugin-vue": "9.17.0",
     "fetch-mock": "9.11.0",
     "gh-pages": "5.0.0",
